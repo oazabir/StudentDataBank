@@ -1,0 +1,6 @@
+C:\Dropbox\MscWork\SOA\Code\StudentService\StudentServiceTest\bin\Debug\StudentServiceTest.dll.config
+C:\Dropbox\MscWork\SOA\Code\StudentService\StudentServiceTest\bin\Debug\StudentServiceTest.dll
+C:\Dropbox\MscWork\SOA\Code\StudentService\StudentServiceTest\bin\Debug\StudentServiceTest.pdb
+C:\Dropbox\MscWork\SOA\Code\StudentService\StudentServiceTest\obj\Debug\StudentServiceTest.csprojResolveAssemblyReference.cache
+C:\Dropbox\MscWork\SOA\Code\StudentService\StudentServiceTest\obj\Debug\StudentServiceTest.dll
+C:\Dropbox\MscWork\SOA\Code\StudentService\StudentServiceTest\obj\Debug\StudentServiceTest.pdb

@@ -1,0 +1,30 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="StudentServiceTest" GeneratedClassName="Config">
+  <Profiles />
+  <Settings>
+    <Setting Name="BaseUrl" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://localhost:1657/api/</Value>
+    </Setting>
+    <Setting Name="Universities" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">universities/</Value>
+    </Setting>
+    <Setting Name="Programs" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">programs/</Value>
+    </Setting>
+    <Setting Name="Namespace" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://universalaward.org</Value>
+    </Setting>
+    <Setting Name="SingleUniversity" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">OX/</Value>
+    </Setting>
+    <Setting Name="UniversityProgramCode" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">MSC_SE</Value>
+    </Setting>
+    <Setting Name="ProgramCourses" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">/courses/</Value>
+    </Setting>
+    <Setting Name="ProgramCourseCode" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">MAT101</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

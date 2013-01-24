@@ -1,0 +1,72 @@
+﻿@model StudentService.Models.UniversityHomeViewModel
+
+@{
+    ViewBag.Title = "UniversityHome";
+}
+
+<h2>@Model.University.Name</h2>
+
+<h3>Courses Offered</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Universal Course</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var course in Model.Courses)
+        {
+        <tr>
+            <td>@course.Code</td>
+            <td>@course.Name</td>
+            <td>@course.UniversalCourseCode</td>
+        </tr>
+        }      
+    </tbody>  
+</table>
+
+<h3>Programs offered</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Courses</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var program in Model.Programs)
+        {
+        <tr>
+            <td>@program.Code</td>
+            <td>@program.Name</td>
+            <td>
+                @string.Join(", ", program.ProgramCourses.Select(pc => pc.Code).ToArray())                    
+            </td>
+        </tr>
+        }      
+    </tbody>  
+</table>
+
+<h3>Students registered</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Student ID</th>
+            <th>First name</th>
+            <th>Last name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var student in Model.Students)
+        {
+        <tr>
+            <td>@student.StudentId</td>
+            <td>@student.Firstname</td>
+            <td>@student.Lastname</td>            
+        </tr>
+        }      
+    </tbody>  
+</table>
