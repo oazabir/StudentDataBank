@@ -529,16 +529,16 @@ input[type="checkbox"].input-validation-error {
 ----------------------------------------------------------*/
 table {
     border-collapse: collapse;
-    border-spacing: 0;
+    border-spacing: 0.25em;
     margin-top: 0.75em;
-    border: 0 none;
+    border: 1px solid lightgrey;
 }
 
 th {
     font-size: 1.2em;
     text-align: left;
     border: none 0px;
-    padding-left: 0;
+    /*padding-left: 0;*/
 }
 
     th a {
@@ -578,7 +578,7 @@ th {
     }
 
 td {
-    padding: 0.25em 2em 0.25em 0em;
+    padding: 0.25em 2em 0.25em 0.25em;
     border: 0 none;
 }
 

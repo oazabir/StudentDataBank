@@ -133,7 +133,8 @@
     <Compile Include="Controllers\Api\StudentController.cs" />
     <Compile Include="Controllers\Api\UniversalCourseController.cs" />
     <Compile Include="Controllers\Api\UniversityController.cs" />
-    <Compile Include="Controllers\UniversityHomeController.cs" />
+    <Compile Include="Controllers\StudentController.cs" />
+    <Compile Include="Controllers\UniversityController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -153,7 +154,8 @@
     <Compile Include="Models\Api\UniversalCourse.cs" />
     <Compile Include="Models\Api\University.cs" />
     <Compile Include="Models\Api\UniversityCourse.cs" />
-    <Compile Include="Models\UniversityHomeViewModel.cs" />
+    <Compile Include="Models\StudentViewModel.cs" />
+    <Compile Include="Models\UniversityViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Echo.ashx.cs">
       <DependentUpon>Echo.ashx</DependentUpon>
@@ -265,7 +267,8 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Echo.ashx" />
-    <Content Include="Views\UniversityHome\Index.cshtml" />
+    <Content Include="Views\University\Index.cshtml" />
+    <Content Include="Views\University\Student.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

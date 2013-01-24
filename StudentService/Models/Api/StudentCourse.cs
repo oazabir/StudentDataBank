@@ -36,8 +36,7 @@ namespace StudentService.Models
         public DateTime StartDate { get; set; }
         
         [DataMember(IsRequired=true)][Required]
-        public DateTime EndDate { get; set; }
-        
+        public DateTime EndDate { get; set; }        
         
         public Student Student { get; set; }        
     }
