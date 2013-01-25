@@ -4,14 +4,6 @@
     ViewBag.Title = "University";
 }
 
-<header>
-    <div class="content-wrapper">
-        <div class="float-left">
-            <p class="site-title">
-                <a href="~/">AwardCloud.org</a></p>
-        </div>
-    </div>
-</header>
 <div id="body">
     <section class="featured">
         <div class="content-wrapper">
@@ -23,7 +15,7 @@
         </div>
     </section>
     <section class="content-wrapper main-content clear-fix">
-        <h3>Programs Registered</h3>
+        <h3>Programs Registered @Html.ActionLink("(Add New)", "AddNewProgramToStudent")</h3>
         <table>
             <thead>
                 <tr>
@@ -33,6 +25,7 @@
                      <th>End</th>
                      <th>Status</th>
                      <th>CGPA</th>
+                    
                 </tr>
             </thead>
             <tbody>
@@ -44,16 +37,19 @@
                     <td>@program.EndDate.ToShortDateString()</td>
                     <td>@program.Status</td>
                     <td>@program.CGPA</td>
-                    <td>
-                        Show Courses
-                    </td>
+                    <td>@Html.RouteLink("Show Courses", "UniversityStudentProgram", 
+                        new RouteValueDictionary(new { 
+                            universityCode = ViewContext.RouteData.Values["universityCode"], 
+                            studentId = ViewContext.RouteData.Values["studentId"], 
+                            programCode = program.ProgramCode }))</td>
+                    
                 </tr>
                 }      
             </tbody>  
         </table>
         
         
-        <h3>Courses Taken</h3>
+        <h3>Courses Taken @Html.ActionLink("(Add New)", "AddNewCourseToStudent")</h3>
         <table>
             <thead>
                 <tr>
@@ -82,7 +78,7 @@
 
         
 
-        <h3>Other universities</h3>
+        <h3>Other universities @Html.ActionLink("(Add New)", "AddNewStudentLink")</h3>
         <table>
             <thead>
                 <tr>

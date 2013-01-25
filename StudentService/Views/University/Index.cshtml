@@ -4,14 +4,6 @@
     ViewBag.Title = "University";
 }
 
-<header>
-    <div class="content-wrapper">
-        <div class="float-left">
-            <p class="site-title">
-                <a href="~/">AwardCloud.org</a></p>
-        </div>
-    </div>
-</header>
 <div id="body">
     <section class="featured">
         <div class="content-wrapper">
@@ -78,7 +70,10 @@
                 @foreach (var student in Model.Students)
                 {
                 <tr>
-                    <td>@Html.RouteLink(student.StudentId, "UniversityStudent", new RouteValueDictionary( new { action="Student", universityCode = "OX", studentId = student.StudentId }))</td>
+                    <td>@Html.RouteLink(student.StudentId, "UniversityStudent", new RouteValueDictionary( new { 
+                       action="Student", 
+                       universityCode = ViewContext.RouteData.Values["universityCode"], 
+                       studentId = student.StudentId }))</td>
                     <td>@student.Firstname</td>
                     <td>@student.Lastname</td>            
                 </tr>

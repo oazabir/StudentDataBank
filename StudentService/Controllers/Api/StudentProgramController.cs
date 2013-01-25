@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using StudentService.Models.Entity;
 
 namespace StudentService.Controllers.Api
 {

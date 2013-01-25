@@ -12,6 +12,7 @@ using StudentService.Models;
 using System.Xml.Serialization;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
+using StudentService.Models.Entity;
 
 namespace StudentService.Controllers.Api
 {

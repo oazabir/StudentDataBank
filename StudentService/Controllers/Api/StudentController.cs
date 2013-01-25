@@ -11,6 +11,7 @@ using System.Web.Http;
 using StudentService.Models;
 using System.Runtime.Serialization;
 using System.Collections.ObjectModel;
+using StudentService.Models.Entity;
 
 namespace StudentService.Controllers.Api
 {
@@ -25,9 +26,9 @@ namespace StudentService.Controllers.Api
         }
 
         // GET api/universities/{universityCode}/students/{studentId}
-        public Student GetStudent(string universityCode, string studentId)
+        public UniversityStudent GetStudent(string universityCode, string studentId)
         {
-            Student student = db.Students.FirstOrDefault(s => s.University.Code == universityCode && s.StudentId == studentId);
+            UniversityStudent student = db.Students.FirstOrDefault(s => s.University.Code == universityCode && s.StudentId == studentId);
             if (student == null)
             {
                 throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
@@ -37,11 +38,11 @@ namespace StudentService.Controllers.Api
         }
 
         // PUT api/universities/{universityCode}/students/{studentId}
-        public HttpResponseMessage PutStudent(string universityCode, string studentId, Student student)
+        public HttpResponseMessage PutStudent(string universityCode, string studentId, UniversityStudent student)
         {
             if (ModelState.IsValid && studentId == student.StudentId)
             {
-                Student existingStudent = GetStudent(universityCode, studentId);
+                UniversityStudent existingStudent = GetStudent(universityCode, studentId);
                 existingStudent.Firstname = student.Firstname;
                 existingStudent.Lastname = student.Lastname;
                 //db.Entry(existingStudent).State = EntityState.Modified;
@@ -64,7 +65,7 @@ namespace StudentService.Controllers.Api
         }
 
         // POST api/universities/{universityCode}/students/
-        public HttpResponseMessage PostStudent(string universityCode, Student student)
+        public HttpResponseMessage PostStudent(string universityCode, UniversityStudent student)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +86,7 @@ namespace StudentService.Controllers.Api
         // DELETE api/universities/{universityCode}/students/{studentId}
         public HttpResponseMessage DeleteStudent(string universityCode, string studentId)
         {
-            Student student = GetStudent(universityCode, studentId);
+            UniversityStudent student = GetStudent(universityCode, studentId);
             if (student == null)
             {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
@@ -113,17 +114,17 @@ namespace StudentService.Controllers.Api
     }
 
     [CollectionDataContract(Namespace = "http://universalaward.org")]
-    public class Students : Collection<Student>
+    public class Students : Collection<UniversityStudent>
     {
-        private IEnumerable<Student> enu;
-        public Students(IEnumerable<Student> e)
+        private IEnumerable<UniversityStudent> enu;
+        public Students(IEnumerable<UniversityStudent> e)
         {
             this.enu = e;
         }
 
         public Students() { }
 
-        public new IEnumerator<Student> GetEnumerator()
+        public new IEnumerator<UniversityStudent> GetEnumerator()
         {
             return (this.enu ?? this).GetEnumerator();
         }

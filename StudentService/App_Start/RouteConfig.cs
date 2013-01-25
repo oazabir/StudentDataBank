@@ -23,12 +23,22 @@ namespace StudentService
                 url: "University/{universityCode}/Students/{studentId}",
                 defaults: new { controller = "University", action = "Student" }
                 );
-
             routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-            );
+                "UniversityStudentProgram",
+                url: "University/{universityCode}/Students/{studentId}/Programs/{programCode}",
+                defaults: new { controller = "University", action = "StudentProgram" }
+                );
+            routes.MapRoute(
+                "ChangeCreditedCourse",
+                url: "University/{universityCode}/Students/{studentId}/Programs/{programCode}/{creditedUniversityCode}/{creditedCourseCode}/{newStatus}",
+                defaults: new { controller = "University", action = "ChangeCreditedCourse" }
+                );
+
+            //routes.MapRoute(
+            //    name: "Default",
+            //    url: "{controller}/{action}/{id}",
+            //    defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+            //);
 
 
         }

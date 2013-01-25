@@ -539,6 +539,7 @@ th {
     text-align: left;
     border: none 0px;
     /*padding-left: 0;*/
+    padding: 0.25em;
 }
 
     th a {

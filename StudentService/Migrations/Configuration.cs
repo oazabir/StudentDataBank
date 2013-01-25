@@ -1,6 +1,7 @@
 namespace StudentService.Migrations
 {
     using StudentService.Models;
+    using StudentService.Models.Entity;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -80,11 +81,11 @@ namespace StudentService.Migrations
                             }
                         }
                     },
-                    Students = new System.Collections.Generic.List<Student>
+                    Students = new System.Collections.Generic.List<UniversityStudent>
                     {
-                        new Student { StudentId = "OX123", Firstname = "Omar", Lastname = "AL Zabir",
-                            LinksToOtherUniversity = new System.Collections.Generic.List<StudentLink> {
-                                new StudentLink { UniversityCode = "CAM", StudentId="CAM123" }
+                        new UniversityStudent { StudentId = "OX123", Firstname = "Omar", Lastname = "AL Zabir",
+                            LinksToOtherUniversity = new System.Collections.Generic.List<UniversityStudentLink> {
+                                new UniversityStudentLink { UniversityCode = "CAM", StudentId="CAM123" }
                             },
                             CoursesTaken = new System.Collections.Generic.List<StudentCourse> {
                                 new StudentCourse { CourseCode="PROG101", Score=3.5f, Grade="A", StartDate=DateTime.Parse("1/1/2001"), EndDate=DateTime.Parse("3/3/2001"),Status= CourseStatusEnum.Completed},
@@ -140,8 +141,8 @@ namespace StudentService.Migrations
                             }
                         }
                     },
-                    Students = new System.Collections.Generic.List<Student> {
-                        new Student { StudentId = "CAM123", Firstname = "Omar", Lastname = "AL Zabir",
+                    Students = new System.Collections.Generic.List<UniversityStudent> {
+                        new UniversityStudent { StudentId = "CAM123", Firstname = "Omar", Lastname = "AL Zabir",
                             CoursesTaken = new System.Collections.Generic.List<StudentCourse> {
                                 new StudentCourse { CourseCode = "MAT101", Score=3.5f, Grade="A", StartDate=DateTime.Parse("1/1/2001"), EndDate=DateTime.Parse("3/3/2001"),Status= CourseStatusEnum.Completed},
                                 new StudentCourse { CourseCode = "MAT102", Score=3.0f, Grade="B", StartDate=DateTime.Parse("1/1/2001"), EndDate=DateTime.Parse("3/3/2001"),Status= CourseStatusEnum.Completed},

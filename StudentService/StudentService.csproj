@@ -143,17 +143,21 @@
       <DependentUpon>201301191926579_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\Api\Program.cs" />
-    <Compile Include="Models\Api\ProgramCourse.cs" />
-    <Compile Include="Models\Api\Student.cs" />
-    <Compile Include="Models\Api\StudentCourse.cs" />
-    <Compile Include="Models\Api\StudentLink.cs" />
-    <Compile Include="Models\Api\StudentProgram.cs" />
-    <Compile Include="Models\Api\CourseCredited.cs" />
-    <Compile Include="Models\Api\StudentServiceContext.cs" />
-    <Compile Include="Models\Api\UniversalCourse.cs" />
-    <Compile Include="Models\Api\University.cs" />
-    <Compile Include="Models\Api\UniversityCourse.cs" />
+    <Compile Include="Models\Entity\Program.cs" />
+    <Compile Include="Models\Entity\ProgramCourse.cs" />
+    <Compile Include="Models\Entity\StudentUserMap.cs" />
+    <Compile Include="Models\Entity\UniversityStudent.cs" />
+    <Compile Include="Models\Entity\StudentCourse.cs" />
+    <Compile Include="Models\Entity\UniversityStudentLink.cs" />
+    <Compile Include="Models\Entity\StudentProgram.cs" />
+    <Compile Include="Models\Entity\CourseCredited.cs" />
+    <Compile Include="Models\StudentServiceContext.cs" />
+    <Compile Include="Models\Entity\StudentUser.cs" />
+    <Compile Include="Models\Entity\UniversalCourse.cs" />
+    <Compile Include="Models\Entity\University.cs" />
+    <Compile Include="Models\Entity\UniversityCourse.cs" />
+    <Compile Include="Models\Entity\User.cs" />
+    <Compile Include="Models\StudentProgramViewModel.cs" />
     <Compile Include="Models\StudentViewModel.cs" />
     <Compile Include="Models\UniversityViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -269,6 +273,7 @@
     <Content Include="Echo.ashx" />
     <Content Include="Views\University\Index.cshtml" />
     <Content Include="Views\University\Student.cshtml" />
+    <Content Include="Views\University\StudentProgram.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
