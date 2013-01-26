@@ -10,7 +10,7 @@ namespace StudentService.Models
     {
         public University University { get; set; }
         public IQueryable<UniversityCourse> Courses { get; set; }
-        public IQueryable<Program> Programs { get; set; }
+        public IQueryable<UniversityProgram> Programs { get; set; }
         public IQueryable<UniversityStudent> Students { get; set; }
     }
 }

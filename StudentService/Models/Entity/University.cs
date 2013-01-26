@@ -25,7 +25,7 @@ namespace StudentService.Models.Entity
         public string Address { get; set; }
         
         [DataMember]
-        public List<Program> Programs { get; set; }
+        public List<UniversityProgram> Programs { get; set; }
 
         [DataMember]
         public List<UniversityStudent> Students { get; set; }
@@ -34,6 +34,6 @@ namespace StudentService.Models.Entity
         public List<UniversityCourse> Courses { get; set; }
 
         [DataMember]
-        public List<UniversityStudentLink> StudentClaims { get; set; }
+        public List<StudentLinkToOtherUniversity> StudentClaims { get; set; }
     }
 }

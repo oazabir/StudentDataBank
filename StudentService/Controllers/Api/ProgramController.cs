@@ -27,9 +27,9 @@ namespace StudentService.Controllers.Api
         }
 
         // GET api/universities/{universityCode}/programs/{programCode}
-        public Program GetProgram(string universityCode, string programCode)
+        public UniversityProgram GetProgram(string universityCode, string programCode)
         {
-            Program program = db.Programs.SingleOrDefault(p => p.University.Code == universityCode && p.Code == programCode);
+            UniversityProgram program = db.Programs.SingleOrDefault(p => p.University.Code == universityCode && p.Code == programCode);
             if (program == null)
             {
                 throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
@@ -39,7 +39,7 @@ namespace StudentService.Controllers.Api
         }
 
         // PUT api/universities/{universityCode}/programs/{programCode}
-        public HttpResponseMessage PutProgram(string universityCode, Program program)
+        public HttpResponseMessage PutProgram(string universityCode, UniversityProgram program)
         {
             if (ModelState.IsValid)
             {
@@ -64,7 +64,7 @@ namespace StudentService.Controllers.Api
         }
 
         // POST api/universities/{universityCode}/programs/
-        public HttpResponseMessage PostProgram(string universityCode, Program program)
+        public HttpResponseMessage PostProgram(string universityCode, UniversityProgram program)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +85,7 @@ namespace StudentService.Controllers.Api
         // DELETE api/universities/{universityCode}/programs/{programCode}
         public HttpResponseMessage DeleteProgram(string universityCode, string programCode)
         {
-            Program program = GetProgram(universityCode, programCode);
+            UniversityProgram program = GetProgram(universityCode, programCode);
             if (program == null)
             {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
@@ -113,17 +113,17 @@ namespace StudentService.Controllers.Api
     }
 
     [CollectionDataContract(Namespace = "http://universalaward.org")]
-    public class Programs : Collection<Program>
+    public class Programs : Collection<UniversityProgram>
     {
-        private IEnumerable<Program> enu;
-        public Programs(IEnumerable<Program> e)
+        private IEnumerable<UniversityProgram> enu;
+        public Programs(IEnumerable<UniversityProgram> e)
         {
             this.enu = e;
         }
 
         public Programs() { }
 
-        public new IEnumerator<Program> GetEnumerator()
+        public new IEnumerator<UniversityProgram> GetEnumerator()
         {
             return (this.enu ?? this).GetEnumerator();
         }

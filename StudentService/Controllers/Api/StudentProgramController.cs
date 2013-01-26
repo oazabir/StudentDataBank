@@ -28,9 +28,9 @@ namespace StudentService.Controllers.Api
         }
 
         // GET api/universities/{universityCode}/students/{studentId}/programs/{programCode}
-        public StudentProgram GetStudentProgram(string universityCode, string studentId, string programCode)
+        public StudentProgramEnrollment GetStudentProgram(string universityCode, string studentId, string programCode)
         {
-            StudentProgram studentProgram = db.StudentPrograms.FirstOrDefault(sp => sp.Student.University.Code == universityCode && sp.Student.StudentId == studentId && sp.ProgramCode == programCode);
+            StudentProgramEnrollment studentProgram = db.StudentPrograms.FirstOrDefault(sp => sp.Student.University.Code == universityCode && sp.Student.StudentId == studentId && sp.ProgramCode == programCode);
             if (studentProgram == null)
             {
                 throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
@@ -40,11 +40,11 @@ namespace StudentService.Controllers.Api
         }
 
         // PUT api/universities/{universityCode}/students/{studentId}/programs/{programCode}
-        public HttpResponseMessage PutStudentProgram(string universityCode, string studentId, string programCode, StudentProgram studentProgram)
+        public HttpResponseMessage PutStudentProgram(string universityCode, string studentId, string programCode, StudentProgramEnrollment studentProgram)
         {
             if (ModelState.IsValid && programCode == studentProgram.ProgramCode)
             {
-                StudentProgram existingStudentProgram = GetStudentProgram(universityCode, studentId, programCode);
+                StudentProgramEnrollment existingStudentProgram = GetStudentProgram(universityCode, studentId, programCode);
                 existingStudentProgram.EndDate = studentProgram.EndDate;
                 existingStudentProgram.StartDate = studentProgram.StartDate;
                 existingStudentProgram.Status = studentProgram.Status;
@@ -69,7 +69,7 @@ namespace StudentService.Controllers.Api
         }
 
         // POST api/universities/{universityCode}/students/
-        public HttpResponseMessage PostStudentProgram(string universityCode, string studentId, StudentProgram studentProgram)
+        public HttpResponseMessage PostStudentProgram(string universityCode, string studentId, StudentProgramEnrollment studentProgram)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +90,7 @@ namespace StudentService.Controllers.Api
         // DELETE api/universities/{universityCode}/students/{studentId}/programs/{programCode}
         public HttpResponseMessage DeleteStudentProgram(string universityCode, string studentId, string programCode)
         {
-            StudentProgram studentProgram = GetStudentProgram(universityCode, studentId, programCode);
+            StudentProgramEnrollment studentProgram = GetStudentProgram(universityCode, studentId, programCode);
             if (studentProgram == null)
             {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
@@ -165,7 +165,7 @@ namespace StudentService.Controllers.Api
                             else
                             {
                                 // Course not credited, let's count this course towards the program
-                                var newCourseCredited = new CourseCredited
+                                var newCourseCredited = new CourseCreditedTowardsProgram
                                 {
                                     CreditedCourseCode = courseInProgram.Code,
                                     CreditedCourseUniversityCode = universityCode,
@@ -215,7 +215,7 @@ namespace StudentService.Controllers.Api
                                     else
                                     {
                                         // Course not credited, let's count this course towards the program
-                                        var newCourseCredited = new CourseCredited
+                                        var newCourseCredited = new CourseCreditedTowardsProgram
                                         {
                                             CreditedCourseCode = matchedCourseTakenInOtherUniversity.CourseCode,
                                             CreditedCourseUniversityCode = otherUniversity.Code,
@@ -266,17 +266,17 @@ namespace StudentService.Controllers.Api
     }
 
     [CollectionDataContract(Namespace = "http://universalaward.org")]
-    public class StudentPrograms : Collection<StudentProgram>
+    public class StudentPrograms : Collection<StudentProgramEnrollment>
     {
-        private IEnumerable<StudentProgram> enu;
-        public StudentPrograms(IEnumerable<StudentProgram> e)
+        private IEnumerable<StudentProgramEnrollment> enu;
+        public StudentPrograms(IEnumerable<StudentProgramEnrollment> e)
         {
             this.enu = e;
         }
 
         public StudentPrograms() { }
 
-        public new IEnumerator<StudentProgram> GetEnumerator()
+        public new IEnumerator<StudentProgramEnrollment> GetEnumerator()
         {
             return (this.enu ?? this).GetEnumerator();
         }

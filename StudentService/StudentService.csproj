@@ -143,14 +143,14 @@
       <DependentUpon>201301191926579_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\Entity\Program.cs" />
-    <Compile Include="Models\Entity\ProgramCourse.cs" />
+    <Compile Include="Models\Entity\UniversityProgram.cs" />
+    <Compile Include="Models\Entity\UniversityProgramCourse.cs" />
     <Compile Include="Models\Entity\StudentUserMap.cs" />
     <Compile Include="Models\Entity\UniversityStudent.cs" />
-    <Compile Include="Models\Entity\StudentCourse.cs" />
-    <Compile Include="Models\Entity\UniversityStudentLink.cs" />
-    <Compile Include="Models\Entity\StudentProgram.cs" />
-    <Compile Include="Models\Entity\CourseCredited.cs" />
+    <Compile Include="Models\Entity\StudentCourseTaken.cs" />
+    <Compile Include="Models\Entity\StudentLinkToOtherUniversity.cs" />
+    <Compile Include="Models\Entity\StudentProgramEnrollment.cs" />
+    <Compile Include="Models\Entity\CourseCreditedTowardsProgram.cs" />
     <Compile Include="Models\StudentServiceContext.cs" />
     <Compile Include="Models\Entity\StudentUser.cs" />
     <Compile Include="Models\Entity\UniversalCourse.cs" />
@@ -226,6 +226,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Models\Entity\ClassDiagram1.cd" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />

@@ -25,13 +25,13 @@ namespace StudentService.Models.Entity
         public University University { get; set; }
 
         [DataMember]
-        public List<UniversityStudentLink> LinksToOtherUniversity { get; set; }
+        public List<StudentLinkToOtherUniversity> LinksToOtherUniversity { get; set; }
 
         [DataMember]
-        public List<StudentCourse> CoursesTaken { get; set; }
+        public List<StudentCourseTaken> CoursesTaken { get; set; }
 
         [DataMember]
-        public List<StudentProgram> Programs { get; set; }
+        public List<StudentProgramEnrollment> Programs { get; set; }
 
     }
 }

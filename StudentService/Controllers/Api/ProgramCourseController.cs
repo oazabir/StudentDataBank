@@ -26,9 +26,9 @@ namespace StudentService.Controllers.Api
         }
 
         // GET api/universities/{universityCode}/programs/{programCode}/courses/{courseCode}
-        public ProgramCourse GetProgramCourse(string universityCode, string programCode, string courseCode)
+        public UniversityProgramCourse GetProgramCourse(string universityCode, string programCode, string courseCode)
         {
-            ProgramCourse programcourse = db.ProgramCourses.FirstOrDefault(pc => pc.Program.University.Code == universityCode && pc.Program.Code == programCode && pc.Code == courseCode);
+            UniversityProgramCourse programcourse = db.ProgramCourses.FirstOrDefault(pc => pc.Program.University.Code == universityCode && pc.Program.Code == programCode && pc.Code == courseCode);
             if (programcourse == null)
             {
                 throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
@@ -38,7 +38,7 @@ namespace StudentService.Controllers.Api
         }
 
         // PUT api/universities/{universityCode}/programs/{programCode}/courses/{courseCode}
-        public HttpResponseMessage PutProgramCourse(string universityCode, string programCode, string courseCode, [FromBody]ProgramCourse programcourse)
+        public HttpResponseMessage PutProgramCourse(string universityCode, string programCode, string courseCode, [FromBody]UniversityProgramCourse programcourse)
         {
             if (ModelState.IsValid && courseCode == programcourse.Code)
             {
@@ -63,7 +63,7 @@ namespace StudentService.Controllers.Api
         }
 
         // POST api/universities/{universityCode}/programs/{programCode}/courses
-        public HttpResponseMessage PostProgramCourse(string universityCode, string programCode, [FromBody]ProgramCourse programcourse)
+        public HttpResponseMessage PostProgramCourse(string universityCode, string programCode, [FromBody]UniversityProgramCourse programcourse)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +85,7 @@ namespace StudentService.Controllers.Api
         // DELETE api/universities/{universityCode}/programs/{programCode}/courses/{courseCode}
         public HttpResponseMessage DeleteProgramCourse(string universityCode, string programCode, string courseCode)
         {
-            ProgramCourse programcourse = GetProgramCourse(universityCode, programCode, courseCode);
+            UniversityProgramCourse programcourse = GetProgramCourse(universityCode, programCode, courseCode);
             if (programcourse == null)
             {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
@@ -113,17 +113,17 @@ namespace StudentService.Controllers.Api
     }
 
     [CollectionDataContract(Namespace = "http://universalaward.org", Name="Courses")]
-    public class ProgramCourses : Collection<ProgramCourse>
+    public class ProgramCourses : Collection<UniversityProgramCourse>
     {
-        private IEnumerable<ProgramCourse> enu;
-        public ProgramCourses(IEnumerable<ProgramCourse> e)
+        private IEnumerable<UniversityProgramCourse> enu;
+        public ProgramCourses(IEnumerable<UniversityProgramCourse> e)
         {
             this.enu = e;
         }
 
         public ProgramCourses() { }
 
-        public new IEnumerator<ProgramCourse> GetEnumerator()
+        public new IEnumerator<UniversityProgramCourse> GetEnumerator()
         {
             return (this.enu ?? this).GetEnumerator();
         }

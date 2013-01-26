@@ -62,37 +62,37 @@ namespace StudentService.Migrations
                         new UniversityCourse { Code = "PROG101", Name = "Programming 101", UniversalCourseCode="PROG101_BASIC" },
                         new UniversityCourse { Code = "PROG102", Name = "Programming 102", UniversalCourseCode="PROG102_BASIC" }
                     },
-                    Programs = new System.Collections.Generic.List<Program> {
-                        new Program { Code = "MSC_SE", Name = "Masters in Software Engineering", 
-                            ProgramCourses = new System.Collections.Generic.List<ProgramCourse> {
-                                new ProgramCourse { Code = "MAT101" },
-                                new ProgramCourse { Code = "MAT102" },
-                                new ProgramCourse { Code = "PHY101" },
-                                new ProgramCourse { Code = "PROG101" },
-                                new ProgramCourse { Code = "PROG102" }
+                    Programs = new System.Collections.Generic.List<UniversityProgram> {
+                        new UniversityProgram { Code = "MSC_SE", Name = "Masters in Software Engineering", 
+                            ProgramCourses = new System.Collections.Generic.List<UniversityProgramCourse> {
+                                new UniversityProgramCourse { Code = "MAT101" },
+                                new UniversityProgramCourse { Code = "MAT102" },
+                                new UniversityProgramCourse { Code = "PHY101" },
+                                new UniversityProgramCourse { Code = "PROG101" },
+                                new UniversityProgramCourse { Code = "PROG102" }
                             }
                         },
-                        new Program { Code = "MSC_PHY", Name = "Masters in Physics",
-                            ProgramCourses = new System.Collections.Generic.List<ProgramCourse> {
-                                new ProgramCourse { Code = "MAT101" },
-                                new ProgramCourse { Code = "MAT102" },
-                                new ProgramCourse { Code = "PHY101" },
-                                new ProgramCourse { Code = "PHY102" }
+                        new UniversityProgram { Code = "MSC_PHY", Name = "Masters in Physics",
+                            ProgramCourses = new System.Collections.Generic.List<UniversityProgramCourse> {
+                                new UniversityProgramCourse { Code = "MAT101" },
+                                new UniversityProgramCourse { Code = "MAT102" },
+                                new UniversityProgramCourse { Code = "PHY101" },
+                                new UniversityProgramCourse { Code = "PHY102" }
                             }
                         }
                     },
                     Students = new System.Collections.Generic.List<UniversityStudent>
                     {
                         new UniversityStudent { StudentId = "OX123", Firstname = "Omar", Lastname = "AL Zabir",
-                            LinksToOtherUniversity = new System.Collections.Generic.List<UniversityStudentLink> {
-                                new UniversityStudentLink { UniversityCode = "CAM", StudentId="CAM123" }
+                            LinksToOtherUniversity = new System.Collections.Generic.List<StudentLinkToOtherUniversity> {
+                                new StudentLinkToOtherUniversity { UniversityCode = "CAM", StudentId="CAM123" }
                             },
-                            CoursesTaken = new System.Collections.Generic.List<StudentCourse> {
-                                new StudentCourse { CourseCode="PROG101", Score=3.5f, Grade="A", StartDate=DateTime.Parse("1/1/2001"), EndDate=DateTime.Parse("3/3/2001"),Status= CourseStatusEnum.Completed},
-                                new StudentCourse { CourseCode="PROG102", Score=3.0f, Grade="B", StartDate=DateTime.Parse("1/1/2001"), EndDate=DateTime.Parse("3/3/2001"),Status= CourseStatusEnum.Completed},
+                            CoursesTaken = new System.Collections.Generic.List<StudentCourseTaken> {
+                                new StudentCourseTaken { CourseCode="PROG101", Score=3.5f, Grade="A", StartDate=DateTime.Parse("1/1/2001"), EndDate=DateTime.Parse("3/3/2001"),Status= CourseStatusEnum.Completed},
+                                new StudentCourseTaken { CourseCode="PROG102", Score=3.0f, Grade="B", StartDate=DateTime.Parse("1/1/2001"), EndDate=DateTime.Parse("3/3/2001"),Status= CourseStatusEnum.Completed},
                             },
-                            Programs = new System.Collections.Generic.List<StudentProgram> {
-                                new StudentProgram { 
+                            Programs = new System.Collections.Generic.List<StudentProgramEnrollment> {
+                                new StudentProgramEnrollment { 
                                     ProgramCode = "MSC_SE", 
                                     Status = ProgramStatusEnum.InProgress, 
                                     StartDate=DateTime.Parse("1/1/2001"), 
@@ -123,30 +123,30 @@ namespace StudentService.Migrations
                         new UniversityCourse { Code = "PROG101", Name = "Programming 101", UniversalCourseCode="PROG101_BASIC" },
                         new UniversityCourse { Code = "PROG102", Name = "Programming 102", UniversalCourseCode="PROG102_BASIC" }
                     },
-                    Programs = new System.Collections.Generic.List<Program> {
-                        new Program { Code = "MSC_SE", Name = "Masters in Software Engineering",
-                            ProgramCourses = new System.Collections.Generic.List<ProgramCourse> {
-                                new ProgramCourse { Code = "MAT101" },
-                                new ProgramCourse { Code = "MAT102" },
-                                new ProgramCourse { Code = "PROG101" },
-                                new ProgramCourse { Code = "PROG103" }
+                    Programs = new System.Collections.Generic.List<UniversityProgram> {
+                        new UniversityProgram { Code = "MSC_SE", Name = "Masters in Software Engineering",
+                            ProgramCourses = new System.Collections.Generic.List<UniversityProgramCourse> {
+                                new UniversityProgramCourse { Code = "MAT101" },
+                                new UniversityProgramCourse { Code = "MAT102" },
+                                new UniversityProgramCourse { Code = "PROG101" },
+                                new UniversityProgramCourse { Code = "PROG103" }
                             }
                         },
-                        new Program { Code = "MSC_PHY", Name = "Masters in Physics",
-                            ProgramCourses = new System.Collections.Generic.List<ProgramCourse> {
-                                new ProgramCourse { Code = "MAT101" },
-                                new ProgramCourse { Code = "MAT102" },
-                                new ProgramCourse { Code = "PHY101" },
-                                new ProgramCourse { Code = "PHY102" }
+                        new UniversityProgram { Code = "MSC_PHY", Name = "Masters in Physics",
+                            ProgramCourses = new System.Collections.Generic.List<UniversityProgramCourse> {
+                                new UniversityProgramCourse { Code = "MAT101" },
+                                new UniversityProgramCourse { Code = "MAT102" },
+                                new UniversityProgramCourse { Code = "PHY101" },
+                                new UniversityProgramCourse { Code = "PHY102" }
                             }
                         }
                     },
                     Students = new System.Collections.Generic.List<UniversityStudent> {
                         new UniversityStudent { StudentId = "CAM123", Firstname = "Omar", Lastname = "AL Zabir",
-                            CoursesTaken = new System.Collections.Generic.List<StudentCourse> {
-                                new StudentCourse { CourseCode = "MAT101", Score=3.5f, Grade="A", StartDate=DateTime.Parse("1/1/2001"), EndDate=DateTime.Parse("3/3/2001"),Status= CourseStatusEnum.Completed},
-                                new StudentCourse { CourseCode = "MAT102", Score=3.0f, Grade="B", StartDate=DateTime.Parse("1/1/2001"), EndDate=DateTime.Parse("3/3/2001"),Status= CourseStatusEnum.Completed},
-                                new StudentCourse { CourseCode = "PHY101", Score=4.0f, Grade="A+", StartDate=DateTime.Parse("1/1/2001"), EndDate=DateTime.Parse("3/3/2001"),Status= CourseStatusEnum.Completed},
+                            CoursesTaken = new System.Collections.Generic.List<StudentCourseTaken> {
+                                new StudentCourseTaken { CourseCode = "MAT101", Score=3.5f, Grade="A", StartDate=DateTime.Parse("1/1/2001"), EndDate=DateTime.Parse("3/3/2001"),Status= CourseStatusEnum.Completed},
+                                new StudentCourseTaken { CourseCode = "MAT102", Score=3.0f, Grade="B", StartDate=DateTime.Parse("1/1/2001"), EndDate=DateTime.Parse("3/3/2001"),Status= CourseStatusEnum.Completed},
+                                new StudentCourseTaken { CourseCode = "PHY101", Score=4.0f, Grade="A+", StartDate=DateTime.Parse("1/1/2001"), EndDate=DateTime.Parse("3/3/2001"),Status= CourseStatusEnum.Completed},
                             }
                         }
                     }

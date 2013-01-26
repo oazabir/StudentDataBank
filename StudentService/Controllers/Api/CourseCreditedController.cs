@@ -29,9 +29,9 @@ namespace StudentService.Controllers.Api
         }
 
         // GET api/universities/{universityCode}/students/{studentId}/programs/{programCode}/coursescredited/{courseCode}
-        public CourseCredited GetCourseCredited(string universityCode, string studentId, string programCode, string courseCode)
+        public CourseCreditedTowardsProgram GetCourseCredited(string universityCode, string studentId, string programCode, string courseCode)
         {
-            CourseCredited coursecredited = db.CourseCrediteds.FirstOrDefault(
+            CourseCreditedTowardsProgram coursecredited = db.CourseCrediteds.FirstOrDefault(
                 cc => cc.StudentProgram.Student.University.Code == universityCode &&
                     cc.StudentProgram.Student.StudentId == studentId &&
                     cc.StudentProgram.ProgramCode == programCode &&
@@ -45,7 +45,7 @@ namespace StudentService.Controllers.Api
         }
 
         // PUT api/universities/{universityCode}/students/{studentId}/programs/{programCode}/coursescredited/{courseCode}
-        public HttpResponseMessage PutCourseCredited(string universityCode, string studentId, string programCode, string courseCode, CourseCredited coursecredited)
+        public HttpResponseMessage PutCourseCredited(string universityCode, string studentId, string programCode, string courseCode, CourseCreditedTowardsProgram coursecredited)
         {
             if (ModelState.IsValid && courseCode == coursecredited.RequiredCourseCode)
             {
@@ -75,7 +75,7 @@ namespace StudentService.Controllers.Api
         }
 
         // POST api/universities/{universityCode}/students/{studentId}/programs/{programCode}/coursescredited/
-        public HttpResponseMessage PostCourseCredited(string universityCode, string studentId, string programCode, CourseCredited coursecredited)
+        public HttpResponseMessage PostCourseCredited(string universityCode, string studentId, string programCode, CourseCreditedTowardsProgram coursecredited)
         {
             if (ModelState.IsValid)
             {
@@ -99,7 +99,7 @@ namespace StudentService.Controllers.Api
         // DELETE api/universities/{universityCode}/students/{studentId}/programs/{programCode}/coursescredited/{courseCode}
         public HttpResponseMessage DeleteCourseCredited(string universityCode, string studentId, string programCode, string courseCode)
         {
-            CourseCredited coursecredited = GetCourseCredited(universityCode, studentId, programCode, courseCode);
+            CourseCreditedTowardsProgram coursecredited = GetCourseCredited(universityCode, studentId, programCode, courseCode);
             if (coursecredited == null)
             {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
@@ -127,17 +127,17 @@ namespace StudentService.Controllers.Api
     }
 
     [CollectionDataContract(Namespace = "http://universalaward.org")]
-    public class CoursesCredited : Collection<CourseCredited>
+    public class CoursesCredited : Collection<CourseCreditedTowardsProgram>
     {
-        private IEnumerable<CourseCredited> enu;
-        public CoursesCredited(IEnumerable<CourseCredited> e)
+        private IEnumerable<CourseCreditedTowardsProgram> enu;
+        public CoursesCredited(IEnumerable<CourseCreditedTowardsProgram> e)
         {
             this.enu = e;
         }
 
         public CoursesCredited() { }
 
-        public new IEnumerator<CourseCredited> GetEnumerator()
+        public new IEnumerator<CourseCreditedTowardsProgram> GetEnumerator()
         {
             return (this.enu ?? this).GetEnumerator();
         }
