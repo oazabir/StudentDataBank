@@ -1,0 +1,16 @@
+<m:soap2rest xmlns:m="http://studentdatabank.org/esb">
+  <m:request>
+    <m:uri>/Institutes</m:uri>
+    <m:method>POST</m:method>
+    <m:body>
+    
+    &lt;EducationalInstitute xmlns:i=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns=&quot;http://studentdatabank.org&quot;&gt;
+&lt;Address&gt;New, UK&lt;/Address&gt;
+&lt;Code&gt;New&lt;/Code&gt;
+&lt;Name&gt;New University2&lt;/Name&gt;
+&lt;/EducationalInstitute&gt;
+
+    
+    </m:body>
+  </m:request>
+</m:soap2rest>

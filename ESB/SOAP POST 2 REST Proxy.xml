@@ -1,0 +1,31 @@
+<!-- This configutation can take a SOAP payload, extract the BODY and post it to 
+the destination. -->
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="POSTSOAP2REST" transports="http" statistics="disable" trace="disable" startOnLoad="true">
+   <target>
+      <inSequence>
+         <property name="HTTP_METHOD" value="POST" scope="axis2"/>
+         <property xmlns:ns3="http://org.apache.synapse/xsd" name="Lang" expression="get-property('transport', 'Accept')" scope="default" type="STRING"/>
+         <property name="DISABLE_CHUNKING" value="true" scope="axis2" type="STRING"/>
+         <property name="REST_URL_POSTFIX" scope="axis2" action="remove"/>
+         <property name="messageType" value="application/xml" scope="axis2"/>
+         <property xmlns:m="http://studentdatabank.org/esb" name="REST_URL_POSTFIX" expression="//m:soap2rest/m:request/m:uri/text()" scope="axis2"/>
+         <log level="custom">
+            <property xmlns:m="http://studentdatabank.org/esb" name="*****REST URI *****" expression="//m:soap2rest/m:request/m:uri/text()"/>
+            <property xmlns:m="http://studentdatabank.org/esb" name="*****BODY *****" expression="//m:soap2rest/m:request/m:body/text()"/>
+         </log>
+         <xslt key="UniversitySoap2POXRequest"/>
+         <send>
+            <endpoint>
+               <address uri="http://localhost:1657/echo.ashx" format="rest"/>
+            </endpoint>
+         </send>
+      </inSequence>
+      <outSequence>
+         <log level="full"/>
+         <property name="messageType" value="application/xml" scope="axis2"/>
+         <send/>
+      </outSequence>
+   </target>
+   <description></description>
+</proxy>
+                                
