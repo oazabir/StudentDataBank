@@ -1,0 +1,85 @@
+﻿@model StudentService.Models.StudentProgramViewModel
+@using StudentService.Models.Entity
+
+@{
+    ViewBag.Title = "University";
+}
+
+<div id="body">
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@Model.Student.Firstname
+                    @Model.Student.Lastname
+                </h1>                
+                <h2>@Model.Program.Name</h2>
+            </hgroup>            
+        </div>
+    </section>
+    <section class="content-wrapper main-content clear-fix">
+        <h3>@Model.Program.Name</h3>
+        <p>Status: @Model.EnrolledProgram.Status - 
+        @Html.RouteLink("Recalculate", "RecalculateProgram", new RouteValueDictionary(new {
+                            universityCode = ViewContext.RouteData.Values["universityCode"],
+                            studentId = ViewContext.RouteData.Values["studentId"],
+                            programCode = ViewContext.RouteData.Values["programCode"],
+                        }))</p>
+        
+        <h3>Courses Credited towards the program</h3>        
+        <table>
+            <thead>
+                <tr>
+                    <th>Educational Institute</th>
+                    <th>Course Code</th>
+                    <th>Required Course</th>
+                    <th>Status</th>
+                    <th>Score</th>
+                    <th>Grade</th>
+                    <th>Action</th>
+                </tr>
+            </thead>    
+            <tbody>
+                @foreach (var course in Model.CourseCredited)
+                {
+                <tr>
+                    <td>@Model.EducationalInstitutes.First(u => u.Code == course.CreditedCourseEICode).Name</td>
+                    <td>@course.CreditedCourseCode</td>
+                    <td>@course.RequiredCourseCode</td>
+                    <td>@course.Status</td>
+                    <td>@course.Score</td>
+                    <td>@course.Grade</td>
+                    <td>@Html.RouteLink(course.Status == CourseCreditedStatusEnum.Accepted ? "Reject" : "Accept", "ChangeCreditedCourse", new RouteValueDictionary(new { 
+                            universityCode = ViewContext.RouteData.Values["universityCode"], 
+                            studentId = ViewContext.RouteData.Values["studentId"], 
+                            programCode = ViewContext.RouteData.Values["programCode"],
+                            creditedUniversityCode = course.CreditedCourseEICode,
+                            creditedCourseCode = course.CreditedCourseCode,
+                            newStatus = (course.Status == CourseCreditedStatusEnum.Accepted ? CourseCreditedStatusEnum.Rejected : CourseCreditedStatusEnum.Accepted)
+                        }))</td>
+                </tr>
+                }      
+            </tbody>  
+        </table>
+
+
+        <h3>Courses pending to complete the program</h3>        
+        <table>
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Name</th>
+                </tr>
+            </thead>    
+            <tbody>
+                @foreach (var course in Model.ProgramCourses.Where(p => Model.CourseCredited.FirstOrDefault(cc => cc.RequiredCourseCode == p.Code) == null))
+                {
+                <tr>
+                    <td>@course.Code</td>
+                    <td>@Model.CoursesInEI.First(c => c.Code == course.Code).Name</td>                    
+                </tr>
+                }      
+            </tbody>  
+        </table>
+    </section>
+</div>
+

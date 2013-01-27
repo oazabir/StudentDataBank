@@ -1,0 +1,74 @@
+﻿@model StudentService.Models.NewLinkViewModel
+
+@{
+    ViewBag.Title = "NewLink";
+}
+<div id="body">
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@Model.Student.Firstname
+                    @Model.Student.Lastname
+                </h1>                
+            </hgroup>            
+        </div>
+    </section>
+    <section class="content-wrapper main-content clear-fix">
+
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Establish new link with another Institution</legend>
+
+        <div class="editor-label">
+            <label>Select the institution:</label>
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.SelectedInstitute, Model.Institutes)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.InstitutionStudentID)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.InstitutionStudentID)
+            @Html.ValidationMessageFor(model => model.InstitutionStudentID)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Firstname)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Firstname)
+            @Html.ValidationMessageFor(model => model.Firstname)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Lastname)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Lastname)
+            @Html.ValidationMessageFor(model => model.Lastname)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DateOfBirth)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DateOfBirth)
+            @Html.ValidationMessageFor(model => model.DateOfBirth)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+    </section>
+</div>
