@@ -37,7 +37,7 @@ namespace StudentServiceTest {
         [global::System.Configuration.DefaultSettingValueAttribute("universities/")]
         public string Universities {
             get {
-                return ((string)(this["Universities"]));
+                return ((string)(this["EducationalInstitutes"]));
             }
         }
         
@@ -52,7 +52,7 @@ namespace StudentServiceTest {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://universalaward.org")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://studentdatabank.org")]
         public string Namespace {
             get {
                 return ((string)(this["Namespace"]));

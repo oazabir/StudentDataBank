@@ -22,13 +22,13 @@ namespace StudentService.Controllers.Api
         // GET api/universities/{universityCode}/programs/{programCode}/courses
         public ProgramCourses GetProgramCourses(string universityCode, string programCode)
         {
-            return new ProgramCourses(db.ProgramCourses.Where(pc => pc.Program.University.Code == universityCode && pc.Program.Code == programCode).AsEnumerable());
+            return new ProgramCourses(db.ProgramCourses.Where(pc => pc.Program.EducationalInstitute.Code == universityCode && pc.Program.Code == programCode).AsEnumerable());
         }
 
         // GET api/universities/{universityCode}/programs/{programCode}/courses/{courseCode}
-        public UniversityProgramCourse GetProgramCourse(string universityCode, string programCode, string courseCode)
+        public EIProgramRequiredCourse GetProgramCourse(string universityCode, string programCode, string courseCode)
         {
-            UniversityProgramCourse programcourse = db.ProgramCourses.FirstOrDefault(pc => pc.Program.University.Code == universityCode && pc.Program.Code == programCode && pc.Code == courseCode);
+            EIProgramRequiredCourse programcourse = db.ProgramCourses.FirstOrDefault(pc => pc.Program.EducationalInstitute.Code == universityCode && pc.Program.Code == programCode && pc.Code == courseCode);
             if (programcourse == null)
             {
                 throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
@@ -38,7 +38,7 @@ namespace StudentService.Controllers.Api
         }
 
         // PUT api/universities/{universityCode}/programs/{programCode}/courses/{courseCode}
-        public HttpResponseMessage PutProgramCourse(string universityCode, string programCode, string courseCode, [FromBody]UniversityProgramCourse programcourse)
+        public HttpResponseMessage PutProgramCourse(string universityCode, string programCode, string courseCode, [FromBody]EIProgramRequiredCourse programcourse)
         {
             if (ModelState.IsValid && courseCode == programcourse.Code)
             {
@@ -63,16 +63,16 @@ namespace StudentService.Controllers.Api
         }
 
         // POST api/universities/{universityCode}/programs/{programCode}/courses
-        public HttpResponseMessage PostProgramCourse(string universityCode, string programCode, [FromBody]UniversityProgramCourse programcourse)
+        public HttpResponseMessage PostProgramCourse(string universityCode, string programCode, [FromBody]EIProgramRequiredCourse programcourse)
         {
             if (ModelState.IsValid)
             {
-                programcourse.Program = db.Programs.First(p => p.University.Code == universityCode && p.Code == programCode);
+                programcourse.Program = db.Programs.First(p => p.EducationalInstitute.Code == universityCode && p.Code == programCode);
                 db.ProgramCourses.Add(programcourse);
                 db.SaveChanges();
 
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, programcourse);
-                response.Headers.Location = new Uri(Url.Link("CoursesOfProgramsOfUniversity", 
+                response.Headers.Location = new Uri(Url.Link("CoursesOfProgramsOfEducationalInstitute", 
                     new { universityCode = universityCode, programCode = programCode, courseCode = programcourse.Code }));
                 return response;
             }
@@ -85,7 +85,7 @@ namespace StudentService.Controllers.Api
         // DELETE api/universities/{universityCode}/programs/{programCode}/courses/{courseCode}
         public HttpResponseMessage DeleteProgramCourse(string universityCode, string programCode, string courseCode)
         {
-            UniversityProgramCourse programcourse = GetProgramCourse(universityCode, programCode, courseCode);
+            EIProgramRequiredCourse programcourse = GetProgramCourse(universityCode, programCode, courseCode);
             if (programcourse == null)
             {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
@@ -112,18 +112,18 @@ namespace StudentService.Controllers.Api
         }
     }
 
-    [CollectionDataContract(Namespace = "http://universalaward.org", Name="Courses")]
-    public class ProgramCourses : Collection<UniversityProgramCourse>
+    [CollectionDataContract(Namespace = "http://studentdatabank.org", Name="Courses")]
+    public class ProgramCourses : Collection<EIProgramRequiredCourse>
     {
-        private IEnumerable<UniversityProgramCourse> enu;
-        public ProgramCourses(IEnumerable<UniversityProgramCourse> e)
+        private IEnumerable<EIProgramRequiredCourse> enu;
+        public ProgramCourses(IEnumerable<EIProgramRequiredCourse> e)
         {
             this.enu = e;
         }
 
         public ProgramCourses() { }
 
-        public new IEnumerator<UniversityProgramCourse> GetEnumerator()
+        public new IEnumerator<EIProgramRequiredCourse> GetEnumerator()
         {
             return (this.enu ?? this).GetEnumerator();
         }

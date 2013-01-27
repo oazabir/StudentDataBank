@@ -48,51 +48,52 @@ namespace StudentService.Migrations
 
                 );
             
-            context.Universities.AddOrUpdate(
+            context.EducationalInstitutes.AddOrUpdate(
                 u => u.Id,
-                new University
+                new EducationalInstitute
                 {
                     Code = "OX",
                     Name = "Oxford University",
                     Address = "Oxfordshire, UK",
-                    Courses = new System.Collections.Generic.List<UniversityCourse> {
-                        new UniversityCourse { Code = "MAT101", Name = "Mathematics 101", UniversalCourseCode="MAT101_BASIC" },
-                        new UniversityCourse { Code = "MAT102", Name = "Mathematics 102", UniversalCourseCode="MAT102_BASIC" },
-                        new UniversityCourse { Code = "PHY101", Name = "Physics 101", UniversalCourseCode="PHY101_BASIC" },
-                        new UniversityCourse { Code = "PROG101", Name = "Programming 101", UniversalCourseCode="PROG101_BASIC" },
-                        new UniversityCourse { Code = "PROG102", Name = "Programming 102", UniversalCourseCode="PROG102_BASIC" }
+                    Courses = new System.Collections.Generic.List<EICourse> {
+                        new EICourse { Code = "MAT101", Name = "Mathematics 101", UniversalCourseCode="MAT101_BASIC" },
+                        new EICourse { Code = "MAT102", Name = "Mathematics 102", UniversalCourseCode="MAT102_BASIC" },
+                        new EICourse { Code = "PHY101", Name = "Physics 101", UniversalCourseCode="PHY101_BASIC" },
+                        new EICourse { Code = "PROG101", Name = "Programming 101", UniversalCourseCode="PROG101_BASIC" },
+                        new EICourse { Code = "PROG102", Name = "Programming 102", UniversalCourseCode="PROG102_BASIC" }
                     },
-                    Programs = new System.Collections.Generic.List<UniversityProgram> {
-                        new UniversityProgram { Code = "MSC_SE", Name = "Masters in Software Engineering", 
-                            ProgramCourses = new System.Collections.Generic.List<UniversityProgramCourse> {
-                                new UniversityProgramCourse { Code = "MAT101" },
-                                new UniversityProgramCourse { Code = "MAT102" },
-                                new UniversityProgramCourse { Code = "PHY101" },
-                                new UniversityProgramCourse { Code = "PROG101" },
-                                new UniversityProgramCourse { Code = "PROG102" }
+                    Programs = new System.Collections.Generic.List<EIProgram> {
+                        new EIProgram { Code = "MSC_SE", Name = "Masters in Software Engineering", 
+                            ProgramCourses = new System.Collections.Generic.List<EIProgramRequiredCourse> {
+                                new EIProgramRequiredCourse { Code = "MAT101" },
+                                new EIProgramRequiredCourse { Code = "MAT102" },
+                                new EIProgramRequiredCourse { Code = "PHY101" },
+                                new EIProgramRequiredCourse { Code = "PROG101" },
+                                new EIProgramRequiredCourse { Code = "PROG102" }
                             }
                         },
-                        new UniversityProgram { Code = "MSC_PHY", Name = "Masters in Physics",
-                            ProgramCourses = new System.Collections.Generic.List<UniversityProgramCourse> {
-                                new UniversityProgramCourse { Code = "MAT101" },
-                                new UniversityProgramCourse { Code = "MAT102" },
-                                new UniversityProgramCourse { Code = "PHY101" },
-                                new UniversityProgramCourse { Code = "PHY102" }
+                        new EIProgram { Code = "MSC_PHY", Name = "Masters in Physics",
+                            ProgramCourses = new System.Collections.Generic.List<EIProgramRequiredCourse> {
+                                new EIProgramRequiredCourse { Code = "MAT101" },
+                                new EIProgramRequiredCourse { Code = "MAT102" },
+                                new EIProgramRequiredCourse { Code = "PHY101" },
+                                new EIProgramRequiredCourse { Code = "PHY102" }
                             }
                         }
                     },
-                    Students = new System.Collections.Generic.List<UniversityStudent>
+                    Students = new System.Collections.Generic.List<EIStudent>
                     {
-                        new UniversityStudent { StudentId = "OX123", Firstname = "Omar", Lastname = "AL Zabir",
-                            LinksToOtherUniversity = new System.Collections.Generic.List<StudentLinkToOtherUniversity> {
-                                new StudentLinkToOtherUniversity { UniversityCode = "CAM", StudentId="CAM123" }
+                        new EIStudent { StudentId = "OX123", Firstname = "Omar", Lastname = "AL Zabir",
+                            LinksToOtherEI = new System.Collections.Generic.List<StudentLinkToOtherEI> {
+                                new StudentLinkToOtherEI { EICode = "CAM", StudentId="CAM123", Status=LinkApprovalStatusEnum.Accepted },
+                                new StudentLinkToOtherEI { EICode = "UCL", StudentId="UCL123", Status=LinkApprovalStatusEnum.PendingApproval },
                             },
-                            CoursesTaken = new System.Collections.Generic.List<StudentCourseTaken> {
-                                new StudentCourseTaken { CourseCode="PROG101", Score=3.5f, Grade="A", StartDate=DateTime.Parse("1/1/2001"), EndDate=DateTime.Parse("3/3/2001"),Status= CourseStatusEnum.Completed},
-                                new StudentCourseTaken { CourseCode="PROG102", Score=3.0f, Grade="B", StartDate=DateTime.Parse("1/1/2001"), EndDate=DateTime.Parse("3/3/2001"),Status= CourseStatusEnum.Completed},
+                            CoursesTaken = new System.Collections.Generic.List<EIStudentCourseTaken> {
+                                new EIStudentCourseTaken { CourseCode="PROG101", Score=3.5f, Grade="A", StartDate=DateTime.Parse("1/1/2001"), EndDate=DateTime.Parse("3/3/2001"),Status= CourseStatusEnum.Completed},
+                                new EIStudentCourseTaken { CourseCode="PROG102", Score=3.0f, Grade="B", StartDate=DateTime.Parse("1/1/2001"), EndDate=DateTime.Parse("3/3/2001"),Status= CourseStatusEnum.Completed},
                             },
-                            Programs = new System.Collections.Generic.List<StudentProgramEnrollment> {
-                                new StudentProgramEnrollment { 
+                            Programs = new System.Collections.Generic.List<EIStudentEnrolledProgram> {
+                                new EIStudentEnrolledProgram { 
                                     ProgramCode = "MSC_SE", 
                                     Status = ProgramStatusEnum.InProgress, 
                                     StartDate=DateTime.Parse("1/1/2001"), 
@@ -111,42 +112,42 @@ namespace StudentService.Migrations
                         }
                     }
                 },
-                new University
+                new EducationalInstitute
                 {
                     Code = "CAM",
                     Name = "Cambridge University",
                     Address = "Cambridge, UK",
-                    Courses = new System.Collections.Generic.List<UniversityCourse> {
-                        new UniversityCourse { Code = "MAT101", Name = "Mathematics 101", UniversalCourseCode="MAT101_BASIC" },
-                        new UniversityCourse { Code = "MAT102", Name = "Mathematics 102", UniversalCourseCode="MAT102_ADV" },
-                        new UniversityCourse { Code = "PHY101", Name = "Physics 101", UniversalCourseCode="PHY101_BASIC" },
-                        new UniversityCourse { Code = "PROG101", Name = "Programming 101", UniversalCourseCode="PROG101_BASIC" },
-                        new UniversityCourse { Code = "PROG102", Name = "Programming 102", UniversalCourseCode="PROG102_BASIC" }
+                    Courses = new System.Collections.Generic.List<EICourse> {
+                        new EICourse { Code = "MAT101", Name = "Mathematics 101", UniversalCourseCode="MAT101_BASIC" },
+                        new EICourse { Code = "MAT102", Name = "Mathematics 102", UniversalCourseCode="MAT102_ADV" },
+                        new EICourse { Code = "PHY101", Name = "Physics 101", UniversalCourseCode="PHY101_BASIC" },
+                        new EICourse { Code = "PROG101", Name = "Programming 101", UniversalCourseCode="PROG101_BASIC" },
+                        new EICourse { Code = "PROG102", Name = "Programming 102", UniversalCourseCode="PROG102_BASIC" }
                     },
-                    Programs = new System.Collections.Generic.List<UniversityProgram> {
-                        new UniversityProgram { Code = "MSC_SE", Name = "Masters in Software Engineering",
-                            ProgramCourses = new System.Collections.Generic.List<UniversityProgramCourse> {
-                                new UniversityProgramCourse { Code = "MAT101" },
-                                new UniversityProgramCourse { Code = "MAT102" },
-                                new UniversityProgramCourse { Code = "PROG101" },
-                                new UniversityProgramCourse { Code = "PROG103" }
+                    Programs = new System.Collections.Generic.List<EIProgram> {
+                        new EIProgram { Code = "MSC_SE", Name = "Masters in Software Engineering",
+                            ProgramCourses = new System.Collections.Generic.List<EIProgramRequiredCourse> {
+                                new EIProgramRequiredCourse { Code = "MAT101" },
+                                new EIProgramRequiredCourse { Code = "MAT102" },
+                                new EIProgramRequiredCourse { Code = "PROG101" },
+                                new EIProgramRequiredCourse { Code = "PROG103" }
                             }
                         },
-                        new UniversityProgram { Code = "MSC_PHY", Name = "Masters in Physics",
-                            ProgramCourses = new System.Collections.Generic.List<UniversityProgramCourse> {
-                                new UniversityProgramCourse { Code = "MAT101" },
-                                new UniversityProgramCourse { Code = "MAT102" },
-                                new UniversityProgramCourse { Code = "PHY101" },
-                                new UniversityProgramCourse { Code = "PHY102" }
+                        new EIProgram { Code = "MSC_PHY", Name = "Masters in Physics",
+                            ProgramCourses = new System.Collections.Generic.List<EIProgramRequiredCourse> {
+                                new EIProgramRequiredCourse { Code = "MAT101" },
+                                new EIProgramRequiredCourse { Code = "MAT102" },
+                                new EIProgramRequiredCourse { Code = "PHY101" },
+                                new EIProgramRequiredCourse { Code = "PHY102" }
                             }
                         }
                     },
-                    Students = new System.Collections.Generic.List<UniversityStudent> {
-                        new UniversityStudent { StudentId = "CAM123", Firstname = "Omar", Lastname = "AL Zabir",
-                            CoursesTaken = new System.Collections.Generic.List<StudentCourseTaken> {
-                                new StudentCourseTaken { CourseCode = "MAT101", Score=3.5f, Grade="A", StartDate=DateTime.Parse("1/1/2001"), EndDate=DateTime.Parse("3/3/2001"),Status= CourseStatusEnum.Completed},
-                                new StudentCourseTaken { CourseCode = "MAT102", Score=3.0f, Grade="B", StartDate=DateTime.Parse("1/1/2001"), EndDate=DateTime.Parse("3/3/2001"),Status= CourseStatusEnum.Completed},
-                                new StudentCourseTaken { CourseCode = "PHY101", Score=4.0f, Grade="A+", StartDate=DateTime.Parse("1/1/2001"), EndDate=DateTime.Parse("3/3/2001"),Status= CourseStatusEnum.Completed},
+                    Students = new System.Collections.Generic.List<EIStudent> {
+                        new EIStudent { StudentId = "CAM123", Firstname = "Omar", Lastname = "AL Zabir",
+                            CoursesTaken = new System.Collections.Generic.List<EIStudentCourseTaken> {
+                                new EIStudentCourseTaken { CourseCode = "MAT101", Score=3.5f, Grade="A", StartDate=DateTime.Parse("1/1/2001"), EndDate=DateTime.Parse("3/3/2001"),Status= CourseStatusEnum.Completed},
+                                new EIStudentCourseTaken { CourseCode = "MAT102", Score=3.0f, Grade="B", StartDate=DateTime.Parse("1/1/2001"), EndDate=DateTime.Parse("3/3/2001"),Status= CourseStatusEnum.Completed},
+                                new EIStudentCourseTaken { CourseCode = "PHY101", Score=4.0f, Grade="A+", StartDate=DateTime.Parse("1/1/2001"), EndDate=DateTime.Parse("3/3/2001"),Status= CourseStatusEnum.Completed},
                             }
                         }
                     }

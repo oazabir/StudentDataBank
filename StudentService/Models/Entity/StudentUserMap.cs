@@ -8,7 +8,7 @@ using System.Web;
 
 namespace StudentService.Models.Entity
 {
-    [DataContract(Namespace = "http://universalaward.org")]
+    [DataContract(Namespace = "http://studentdatabank.org")]
     public class StudentUserMap
     {
         [Key]
@@ -22,12 +22,12 @@ namespace StudentService.Models.Entity
         public string StudentId { get; set; }
 
         [DataMember][Required][StringLength(50)]
-        public string UniversityCode { get; set; }
+        public string EICode { get; set; }
 
-        [ForeignKey("RegisteredUniversity")]
-        public int RegisteredUniversity_Id { get; set; }
+        [ForeignKey("RegisteredEI")]
+        public int RegisteredEI_Id { get; set; }
 
-        public University RegisteredUniversity { get; set; }
+        public EducationalInstitute RegisteredEI { get; set; }
 
         [DataMember(IsRequired = true)]
         [Required]

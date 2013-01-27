@@ -10,8 +10,8 @@ namespace StudentService
         public static void Register(HttpConfiguration config)
         {
             config.Routes.MapHttpRoute(
-                name: "CoursesOfProgramsOfUniversity",
-                routeTemplate: "api/universities/{universityCode}/programs/{programCode}/courses/{courseCode}",
+                name: "CoursesOfProgramsOfEducationalInstitute",
+                routeTemplate: "api/institutes/{universityCode}/programs/{programCode}/courses/{courseCode}",
                 defaults: new
                 {
                     controller = "ProgramCourse",
@@ -19,55 +19,55 @@ namespace StudentService
                 });
 
             config.Routes.MapHttpRoute(
-                name: "ProgramsOfUniversity",
-                routeTemplate: "api/universities/{universityCode}/programs/{programCode}",
+                name: "ProgramsOfEducationalInstitute",
+                routeTemplate: "api/institutes/{universityCode}/programs/{programCode}",
                 defaults: new { 
-                    controller = "program", 
+                    controller = "Program", 
                     programCode = RouteParameter.Optional
                 });
 
             config.Routes.MapHttpRoute(
-                name: "StudentsOfUniversity",
-                routeTemplate: "api/universities/{universityCode}/students/{studentId}",
+                name: "StudentOfEducationalInstitute",
+                routeTemplate: "api/institutes/{universityCode}/students/{studentId}",
                 defaults: new
                 {
-                    controller = "student",
+                    controller = "Student",
                     studentId = RouteParameter.Optional
                 });
 
             config.Routes.MapHttpRoute(
-                name: "ProgramsOfStudentOfUniversity",
-                routeTemplate: "api/universities/{universityCode}/students/{studentId}/programs/{programCode}",
+                name: "ProgramsOfStudentOfEducationalInstitute",
+                routeTemplate: "api/institutes/{universityCode}/students/{studentId}/programs/{programCode}",
                 defaults: new
                 {
-                    controller = "studentprogram",
+                    controller = "StudentProgram",
                     programCode = RouteParameter.Optional
                 });
-
+            
             config.Routes.MapHttpRoute(
-                name: "RefreshProgramOfStudentOfUniversity",
-                routeTemplate: "api/universities/{universityCode}/students/{studentId}/programs/{programCode}/refresh",
+                name: "RefreshProgramOfStudentOfEducationalInstitute",
+                routeTemplate: "api/institutes/{universityCode}/students/{studentId}/programs/{programCode}/refresh",
                 defaults: new
                 {
-                    controller = "studentprogram",
+                    controller = "StudentProgram",
                     action = "Refresh"
                 });
 
             config.Routes.MapHttpRoute(
-                name: "CourseCreditedOfProgramOfStudentOfUniversity",
-                routeTemplate: "api/universities/{universityCode}/students/{studentId}/programs/{programCode}/coursescredited/{courseCode}",
+                name: "CourseCreditedOfProgramOfStudentOfEducationalInstitute",
+                routeTemplate: "api/institutes/{universityCode}/students/{studentId}/programs/{programCode}/coursescredited/{courseCode}",
                 defaults: new
                 {
-                    controller = "coursecredited",
+                    controller = "CourseCredited",
                     courseCode = RouteParameter.Optional
                 });
 
             config.Routes.MapHttpRoute(
-                name: "Universities",
-                routeTemplate: "api/universities/{code}",                
+                name: "EducationalInstitutes",
+                routeTemplate: "api/institutes/{code}",                
                 defaults: new
                 {
-                    controller = "university",
+                    controller = "EducationalInstitute",
                     code = RouteParameter.Optional
                 });
 
@@ -84,6 +84,7 @@ namespace StudentService
 
             // Make XML default formatter
             var xmlFormatter = config.Formatters.XmlFormatter;
+            xmlFormatter.Indent = true;
             config.Formatters.Remove(xmlFormatter);
             config.Formatters.Insert(0, xmlFormatter);            
         }

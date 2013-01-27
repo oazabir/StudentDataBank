@@ -8,20 +8,20 @@ namespace StudentService.Migrations
         public override void Up()
         {
             CreateTable(
-                "dbo.Programs",
+                "dbo.EIPrograms",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Code = c.String(nullable: false, maxLength: 50),
                         Name = c.String(nullable: false, maxLength: 255),
-                        University_Id = c.Int(),
+                        EducationalInstitute_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Universities", t => t.University_Id)
-                .Index(t => t.University_Id);
+                .ForeignKey("dbo.EducationalInstitutes", t => t.EducationalInstitute_Id)
+                .Index(t => t.EducationalInstitute_Id);
             
             CreateTable(
-                "dbo.Universities",
+                "dbo.EducationalInstitutes",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -32,37 +32,38 @@ namespace StudentService.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.UniversityStudents",
+                "dbo.EIStudents",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Firstname = c.String(nullable: false, maxLength: 50),
                         Lastname = c.String(nullable: false, maxLength: 50),
                         StudentId = c.String(nullable: false, maxLength: 50),
-                        University_Id = c.Int(),
+                        EducationalInstitute_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Universities", t => t.University_Id)
-                .Index(t => t.University_Id);
+                .ForeignKey("dbo.EducationalInstitutes", t => t.EducationalInstitute_Id)
+                .Index(t => t.EducationalInstitute_Id);
             
             CreateTable(
-                "dbo.UniversityStudentLinks",
+                "dbo.StudentLinkToOtherEIs",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        UniversityCode = c.String(nullable: false, maxLength: 50),
+                        EICode = c.String(nullable: false, maxLength: 50),
                         StudentId = c.String(nullable: false, maxLength: 50),
+                        Status = c.Int(nullable: false),
                         Student_Id = c.Int(),
-                        University_Id = c.Int(),
+                        EducationalInstitute_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.UniversityStudents", t => t.Student_Id)
-                .ForeignKey("dbo.Universities", t => t.University_Id)
+                .ForeignKey("dbo.EIStudents", t => t.Student_Id)
+                .ForeignKey("dbo.EducationalInstitutes", t => t.EducationalInstitute_Id)
                 .Index(t => t.Student_Id)
-                .Index(t => t.University_Id);
+                .Index(t => t.EducationalInstitute_Id);
             
             CreateTable(
-                "dbo.StudentCourses",
+                "dbo.EIStudentCourseTakens",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -75,11 +76,11 @@ namespace StudentService.Migrations
                         Student_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.UniversityStudents", t => t.Student_Id)
+                .ForeignKey("dbo.EIStudents", t => t.Student_Id)
                 .Index(t => t.Student_Id);
             
             CreateTable(
-                "dbo.StudentPrograms",
+                "dbo.EIStudentEnrolledPrograms",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -92,42 +93,42 @@ namespace StudentService.Migrations
                         Student_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.UniversityStudents", t => t.Student_Id)
+                .ForeignKey("dbo.EIStudents", t => t.Student_Id)
                 .Index(t => t.Student_Id);
             
             CreateTable(
-                "dbo.CourseCrediteds",
+                "dbo.CourseCreditedTowardsPrograms",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
                         RequiredCourseCode = c.String(nullable: false, maxLength: 50),
                         CreditedCourseCode = c.String(nullable: false, maxLength: 50),
-                        CreditedCourseUniversityCode = c.String(nullable: false, maxLength: 50),
+                        CreditedCourseEICode = c.String(nullable: false, maxLength: 50),
                         Score = c.Single(nullable: false),
                         Grade = c.String(nullable: false),
                         Status = c.Int(nullable: false),
                         StudentProgram_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.StudentPrograms", t => t.StudentProgram_Id)
+                .ForeignKey("dbo.EIStudentEnrolledPrograms", t => t.StudentProgram_Id)
                 .Index(t => t.StudentProgram_Id);
             
             CreateTable(
-                "dbo.UniversityCourses",
+                "dbo.EICourses",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Name = c.String(nullable: false, maxLength: 255),
                         Code = c.String(nullable: false, maxLength: 50),
                         UniversalCourseCode = c.String(nullable: false, maxLength: 50),
-                        University_Id = c.Int(),
+                        EducationalInstitute_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Universities", t => t.University_Id)
-                .Index(t => t.University_Id);
+                .ForeignKey("dbo.EducationalInstitutes", t => t.EducationalInstitute_Id)
+                .Index(t => t.EducationalInstitute_Id);
             
             CreateTable(
-                "dbo.ProgramCourses",
+                "dbo.EIProgramRequiredCourses",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -135,7 +136,7 @@ namespace StudentService.Migrations
                         Program_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Programs", t => t.Program_Id)
+                .ForeignKey("dbo.EIPrograms", t => t.Program_Id)
                 .Index(t => t.Program_Id);
             
             CreateTable(
@@ -167,55 +168,55 @@ namespace StudentService.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         StudentId = c.String(nullable: false, maxLength: 50),
-                        UniversityCode = c.String(nullable: false, maxLength: 50),
-                        RegisteredUniversity_Id = c.Int(nullable: false),
+                        EICode = c.String(nullable: false, maxLength: 50),
+                        RegisteredEI_Id = c.Int(nullable: false),
                         Approved = c.Boolean(nullable: false),
                         StudentUser_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Users", t => t.StudentUser_Id)
-                .ForeignKey("dbo.Universities", t => t.RegisteredUniversity_Id, cascadeDelete: true)
+                .ForeignKey("dbo.EducationalInstitutes", t => t.RegisteredEI_Id, cascadeDelete: true)
                 .Index(t => t.StudentUser_Id)
-                .Index(t => t.RegisteredUniversity_Id);
+                .Index(t => t.RegisteredEI_Id);
             
         }
         
         public override void Down()
         {
-            DropIndex("dbo.StudentUserMaps", new[] { "RegisteredUniversity_Id" });
+            DropIndex("dbo.StudentUserMaps", new[] { "RegisteredEI_Id" });
             DropIndex("dbo.StudentUserMaps", new[] { "StudentUser_Id" });
-            DropIndex("dbo.ProgramCourses", new[] { "Program_Id" });
-            DropIndex("dbo.UniversityCourses", new[] { "University_Id" });
-            DropIndex("dbo.CourseCrediteds", new[] { "StudentProgram_Id" });
-            DropIndex("dbo.StudentPrograms", new[] { "Student_Id" });
-            DropIndex("dbo.StudentCourses", new[] { "Student_Id" });
-            DropIndex("dbo.UniversityStudentLinks", new[] { "University_Id" });
-            DropIndex("dbo.UniversityStudentLinks", new[] { "Student_Id" });
-            DropIndex("dbo.UniversityStudents", new[] { "University_Id" });
-            DropIndex("dbo.Programs", new[] { "University_Id" });
-            DropForeignKey("dbo.StudentUserMaps", "RegisteredUniversity_Id", "dbo.Universities");
+            DropIndex("dbo.EIProgramRequiredCourses", new[] { "Program_Id" });
+            DropIndex("dbo.EICourses", new[] { "EducationalInstitute_Id" });
+            DropIndex("dbo.CourseCreditedTowardsPrograms", new[] { "StudentProgram_Id" });
+            DropIndex("dbo.EIStudentEnrolledPrograms", new[] { "Student_Id" });
+            DropIndex("dbo.EIStudentCourseTakens", new[] { "Student_Id" });
+            DropIndex("dbo.StudentLinkToOtherEIs", new[] { "EducationalInstitute_Id" });
+            DropIndex("dbo.StudentLinkToOtherEIs", new[] { "Student_Id" });
+            DropIndex("dbo.EIStudents", new[] { "EducationalInstitute_Id" });
+            DropIndex("dbo.EIPrograms", new[] { "EducationalInstitute_Id" });
+            DropForeignKey("dbo.StudentUserMaps", "RegisteredEI_Id", "dbo.EducationalInstitutes");
             DropForeignKey("dbo.StudentUserMaps", "StudentUser_Id", "dbo.Users");
-            DropForeignKey("dbo.ProgramCourses", "Program_Id", "dbo.Programs");
-            DropForeignKey("dbo.UniversityCourses", "University_Id", "dbo.Universities");
-            DropForeignKey("dbo.CourseCrediteds", "StudentProgram_Id", "dbo.StudentPrograms");
-            DropForeignKey("dbo.StudentPrograms", "Student_Id", "dbo.UniversityStudents");
-            DropForeignKey("dbo.StudentCourses", "Student_Id", "dbo.UniversityStudents");
-            DropForeignKey("dbo.UniversityStudentLinks", "University_Id", "dbo.Universities");
-            DropForeignKey("dbo.UniversityStudentLinks", "Student_Id", "dbo.UniversityStudents");
-            DropForeignKey("dbo.UniversityStudents", "University_Id", "dbo.Universities");
-            DropForeignKey("dbo.Programs", "University_Id", "dbo.Universities");
+            DropForeignKey("dbo.EIProgramRequiredCourses", "Program_Id", "dbo.EIPrograms");
+            DropForeignKey("dbo.EICourses", "EducationalInstitute_Id", "dbo.EducationalInstitutes");
+            DropForeignKey("dbo.CourseCreditedTowardsPrograms", "StudentProgram_Id", "dbo.EIStudentEnrolledPrograms");
+            DropForeignKey("dbo.EIStudentEnrolledPrograms", "Student_Id", "dbo.EIStudents");
+            DropForeignKey("dbo.EIStudentCourseTakens", "Student_Id", "dbo.EIStudents");
+            DropForeignKey("dbo.StudentLinkToOtherEIs", "EducationalInstitute_Id", "dbo.EducationalInstitutes");
+            DropForeignKey("dbo.StudentLinkToOtherEIs", "Student_Id", "dbo.EIStudents");
+            DropForeignKey("dbo.EIStudents", "EducationalInstitute_Id", "dbo.EducationalInstitutes");
+            DropForeignKey("dbo.EIPrograms", "EducationalInstitute_Id", "dbo.EducationalInstitutes");
             DropTable("dbo.StudentUserMaps");
             DropTable("dbo.Users");
             DropTable("dbo.UniversalCourses");
-            DropTable("dbo.ProgramCourses");
-            DropTable("dbo.UniversityCourses");
-            DropTable("dbo.CourseCrediteds");
-            DropTable("dbo.StudentPrograms");
-            DropTable("dbo.StudentCourses");
-            DropTable("dbo.UniversityStudentLinks");
-            DropTable("dbo.UniversityStudents");
-            DropTable("dbo.Universities");
-            DropTable("dbo.Programs");
+            DropTable("dbo.EIProgramRequiredCourses");
+            DropTable("dbo.EICourses");
+            DropTable("dbo.CourseCreditedTowardsPrograms");
+            DropTable("dbo.EIStudentEnrolledPrograms");
+            DropTable("dbo.EIStudentCourseTakens");
+            DropTable("dbo.StudentLinkToOtherEIs");
+            DropTable("dbo.EIStudents");
+            DropTable("dbo.EducationalInstitutes");
+            DropTable("dbo.EIPrograms");
         }
     }
 }

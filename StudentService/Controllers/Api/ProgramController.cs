@@ -22,14 +22,14 @@ namespace StudentService.Controllers.Api
         // GET api/universities/{universityCode}/programs
         public Programs GetPrograms(string universityCode)
         {
-            var programs = db.Programs.Where(p => p.University.Code == universityCode);
+            var programs = db.Programs.Where(p => p.EducationalInstitute.Code == universityCode);
             return new Programs(programs.AsEnumerable());
         }
 
         // GET api/universities/{universityCode}/programs/{programCode}
-        public UniversityProgram GetProgram(string universityCode, string programCode)
+        public EIProgram GetProgram(string universityCode, string programCode)
         {
-            UniversityProgram program = db.Programs.SingleOrDefault(p => p.University.Code == universityCode && p.Code == programCode);
+            EIProgram program = db.Programs.SingleOrDefault(p => p.EducationalInstitute.Code == universityCode && p.Code == programCode);
             if (program == null)
             {
                 throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
@@ -39,11 +39,11 @@ namespace StudentService.Controllers.Api
         }
 
         // PUT api/universities/{universityCode}/programs/{programCode}
-        public HttpResponseMessage PutProgram(string universityCode, UniversityProgram program)
+        public HttpResponseMessage PutProgram(string universityCode, EIProgram program)
         {
             if (ModelState.IsValid)
             {
-                program.University = db.Universities.Single(u => u.Code == universityCode);
+                program.EducationalInstitute = db.EducationalInstitutes.Single(u => u.Code == universityCode);
                 db.Entry(program).State = EntityState.Modified;
 
                 try
@@ -64,16 +64,16 @@ namespace StudentService.Controllers.Api
         }
 
         // POST api/universities/{universityCode}/programs/
-        public HttpResponseMessage PostProgram(string universityCode, UniversityProgram program)
+        public HttpResponseMessage PostProgram(string universityCode, EIProgram program)
         {
             if (ModelState.IsValid)
             {
-                program.University = db.Universities.Single(u => u.Code == universityCode);
+                program.EducationalInstitute = db.EducationalInstitutes.Single(u => u.Code == universityCode);
                 db.Programs.Add(program);
                 db.SaveChanges();
 
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, program);
-                response.Headers.Location = new Uri(Url.Link("ProgramsOfUniversity", new { universityCode = universityCode, programCode = program.Code }));
+                response.Headers.Location = new Uri(Url.Link("ProgramsOfEducationalInstitute", new { universityCode = universityCode, programCode = program.Code }));
                 return response;
             }
             else
@@ -85,7 +85,7 @@ namespace StudentService.Controllers.Api
         // DELETE api/universities/{universityCode}/programs/{programCode}
         public HttpResponseMessage DeleteProgram(string universityCode, string programCode)
         {
-            UniversityProgram program = GetProgram(universityCode, programCode);
+            EIProgram program = GetProgram(universityCode, programCode);
             if (program == null)
             {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
@@ -112,18 +112,18 @@ namespace StudentService.Controllers.Api
         }
     }
 
-    [CollectionDataContract(Namespace = "http://universalaward.org")]
-    public class Programs : Collection<UniversityProgram>
+    [CollectionDataContract(Namespace = "http://studentdatabank.org")]
+    public class Programs : Collection<EIProgram>
     {
-        private IEnumerable<UniversityProgram> enu;
-        public Programs(IEnumerable<UniversityProgram> e)
+        private IEnumerable<EIProgram> enu;
+        public Programs(IEnumerable<EIProgram> e)
         {
             this.enu = e;
         }
 
         public Programs() { }
 
-        public new IEnumerator<UniversityProgram> GetEnumerator()
+        public new IEnumerator<EIProgram> GetEnumerator()
         {
             return (this.enu ?? this).GetEnumerator();
         }

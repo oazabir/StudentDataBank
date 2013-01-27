@@ -132,9 +132,8 @@
     <Compile Include="Controllers\Api\ProgramCourseController.cs" />
     <Compile Include="Controllers\Api\StudentController.cs" />
     <Compile Include="Controllers\Api\UniversalCourseController.cs" />
-    <Compile Include="Controllers\Api\UniversityController.cs" />
-    <Compile Include="Controllers\StudentController.cs" />
-    <Compile Include="Controllers\UniversityController.cs" />
+    <Compile Include="Controllers\Api\EducationalInstituteController.cs" />
+    <Compile Include="Controllers\EducationalInstituteController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -143,23 +142,24 @@
       <DependentUpon>201301191926579_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\Entity\UniversityProgram.cs" />
-    <Compile Include="Models\Entity\UniversityProgramCourse.cs" />
+    <Compile Include="Models\Entity\EIProgram.cs" />
+    <Compile Include="Models\Entity\EIProgramRequiredCourse.cs" />
     <Compile Include="Models\Entity\StudentUserMap.cs" />
-    <Compile Include="Models\Entity\UniversityStudent.cs" />
-    <Compile Include="Models\Entity\StudentCourseTaken.cs" />
-    <Compile Include="Models\Entity\StudentLinkToOtherUniversity.cs" />
-    <Compile Include="Models\Entity\StudentProgramEnrollment.cs" />
+    <Compile Include="Models\Entity\EIStudent.cs" />
+    <Compile Include="Models\Entity\EIStudentCourseTaken.cs" />
+    <Compile Include="Models\Entity\StudentLinkToOtherEI.cs" />
+    <Compile Include="Models\Entity\EIStudentEnrolledProgram.cs" />
     <Compile Include="Models\Entity\CourseCreditedTowardsProgram.cs" />
+    <Compile Include="Models\NewLinkViewModel.cs" />
     <Compile Include="Models\StudentServiceContext.cs" />
     <Compile Include="Models\Entity\StudentUser.cs" />
     <Compile Include="Models\Entity\UniversalCourse.cs" />
-    <Compile Include="Models\Entity\University.cs" />
-    <Compile Include="Models\Entity\UniversityCourse.cs" />
+    <Compile Include="Models\Entity\EducationalInstitute.cs" />
+    <Compile Include="Models\Entity\EICourse.cs" />
     <Compile Include="Models\Entity\User.cs" />
     <Compile Include="Models\StudentProgramViewModel.cs" />
     <Compile Include="Models\StudentViewModel.cs" />
-    <Compile Include="Models\UniversityViewModel.cs" />
+    <Compile Include="Models\EIViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Echo.ashx.cs">
       <DependentUpon>Echo.ashx</DependentUpon>
@@ -226,7 +226,6 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Models\Entity\ClassDiagram1.cd" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
@@ -272,9 +271,10 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Echo.ashx" />
-    <Content Include="Views\University\Index.cshtml" />
-    <Content Include="Views\University\Student.cshtml" />
-    <Content Include="Views\University\StudentProgram.cshtml" />
+    <Content Include="Views\EducationalInstitute\Index.cshtml" />
+    <Content Include="Views\EducationalInstitute\Student.cshtml" />
+    <Content Include="Views\EducationalInstitute\StudentProgram.cshtml" />
+    <Content Include="Views\EducationalInstitute\NewLink.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

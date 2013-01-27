@@ -22,13 +22,13 @@ namespace StudentService.Controllers.Api
         // GET api/universities/{universityCode}/students/
         public Students GetStudents(string universityCode)
         {
-            return new Students(db.Students.Where(s => s.University.Code == universityCode).AsEnumerable());
+            return new Students(db.Students.Where(s => s.EducationalInstitute.Code == universityCode).AsEnumerable());
         }
 
         // GET api/universities/{universityCode}/students/{studentId}
-        public UniversityStudent GetStudent(string universityCode, string studentId)
+        public EIStudent GetStudent(string universityCode, string studentId)
         {
-            UniversityStudent student = db.Students.FirstOrDefault(s => s.University.Code == universityCode && s.StudentId == studentId);
+            EIStudent student = db.Students.FirstOrDefault(s => s.EducationalInstitute.Code == universityCode && s.StudentId == studentId);
             if (student == null)
             {
                 throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
@@ -38,11 +38,11 @@ namespace StudentService.Controllers.Api
         }
 
         // PUT api/universities/{universityCode}/students/{studentId}
-        public HttpResponseMessage PutStudent(string universityCode, string studentId, UniversityStudent student)
+        public HttpResponseMessage PutStudent(string universityCode, string studentId, EIStudent student)
         {
             if (ModelState.IsValid && studentId == student.StudentId)
             {
-                UniversityStudent existingStudent = GetStudent(universityCode, studentId);
+                EIStudent existingStudent = GetStudent(universityCode, studentId);
                 existingStudent.Firstname = student.Firstname;
                 existingStudent.Lastname = student.Lastname;
                 //db.Entry(existingStudent).State = EntityState.Modified;
@@ -65,16 +65,16 @@ namespace StudentService.Controllers.Api
         }
 
         // POST api/universities/{universityCode}/students/
-        public HttpResponseMessage PostStudent(string universityCode, UniversityStudent student)
+        public HttpResponseMessage PostStudent(string universityCode, EIStudent student)
         {
             if (ModelState.IsValid)
             {
-                student.University = db.Universities.First(u => u.Code == universityCode);
+                student.EducationalInstitute = db.EducationalInstitutes.First(u => u.Code == universityCode);
                 db.Students.Add(student);
                 db.SaveChanges();
 
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, student);
-                response.Headers.Location = new Uri(Url.Link("StudentsOfUniversity", new { universityCode = universityCode, studentId = student.Id }));
+                response.Headers.Location = new Uri(Url.Link("StudentOfEducationalInstitute", new { universityCode = universityCode, studentId = student.StudentId }));
                 return response;
             }
             else
@@ -86,7 +86,7 @@ namespace StudentService.Controllers.Api
         // DELETE api/universities/{universityCode}/students/{studentId}
         public HttpResponseMessage DeleteStudent(string universityCode, string studentId)
         {
-            UniversityStudent student = GetStudent(universityCode, studentId);
+            EIStudent student = GetStudent(universityCode, studentId);
             if (student == null)
             {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
@@ -113,18 +113,18 @@ namespace StudentService.Controllers.Api
         }
     }
 
-    [CollectionDataContract(Namespace = "http://universalaward.org")]
-    public class Students : Collection<UniversityStudent>
+    [CollectionDataContract(Namespace = "http://studentdatabank.org")]
+    public class Students : Collection<EIStudent>
     {
-        private IEnumerable<UniversityStudent> enu;
-        public Students(IEnumerable<UniversityStudent> e)
+        private IEnumerable<EIStudent> enu;
+        public Students(IEnumerable<EIStudent> e)
         {
             this.enu = e;
         }
 
         public Students() { }
 
-        public new IEnumerator<UniversityStudent> GetEnumerator()
+        public new IEnumerator<EIStudent> GetEnumerator()
         {
             return (this.enu ?? this).GetEnumerator();
         }

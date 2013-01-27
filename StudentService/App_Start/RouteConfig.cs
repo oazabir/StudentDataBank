@@ -14,31 +14,48 @@ namespace StudentService
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                "University",
-                url: "University/{universityCode}",
-                defaults: new { controller = "University", action = "Index" }
+                "EducationalInstitute",
+                url: "Institutes/{universityCode}",
+                defaults: new { controller = "EducationalInstitute", action = "Index" }
                 );
             routes.MapRoute(
-                "UniversityStudent",
-                url: "University/{universityCode}/Students/{studentId}",
-                defaults: new { controller = "University", action = "Student" }
+                "EducationalInstituteStudent",
+                url: "Institutes/{universityCode}/Students/{studentId}",
+                defaults: new { controller = "EducationalInstitute", action = "Student" }
                 );
             routes.MapRoute(
-                "UniversityStudentProgram",
-                url: "University/{universityCode}/Students/{studentId}/Programs/{programCode}",
-                defaults: new { controller = "University", action = "StudentProgram" }
+                "EducationalInstituteStudentProgram",
+                url: "Institutes/{universityCode}/Students/{studentId}/Programs/{programCode}",
+                defaults: new { controller = "EducationalInstitute", action = "StudentProgram" }
+                );
+            routes.MapRoute(
+                "RecalculateProgram",
+                url: "Institutes/{universityCode}/Students/{studentId}/Programs/{programCode}/recalculate",
+                defaults: new { controller = "EducationalInstitute", action = "RecalculateProgram" }
                 );
             routes.MapRoute(
                 "ChangeCreditedCourse",
-                url: "University/{universityCode}/Students/{studentId}/Programs/{programCode}/{creditedUniversityCode}/{creditedCourseCode}/{newStatus}",
-                defaults: new { controller = "University", action = "ChangeCreditedCourse" }
+                url: "Institutes/{universityCode}/Students/{studentId}/Programs/{programCode}/{creditedUniversityCode}/{creditedCourseCode}/{newStatus}",
+                defaults: new { controller = "EducationalInstitute", action = "ChangeCreditedCourse" }
                 );
 
-            //routes.MapRoute(
-            //    name: "Default",
-            //    url: "{controller}/{action}/{id}",
-            //    defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-            //);
+            routes.MapRoute(
+                "NewLink",
+                url: "Institutes/{universityCode}/Students/{studentId}/NewLink",
+                defaults: new { controller = "EducationalInstitute", action = "NewLink" }
+                );
+
+            routes.MapRoute(
+                "FetchCourses",
+                url: "Institutes/{universityCode}/Students/{studentId}/links/{otherUniversityCode}/{otherStudentId}/fetch",
+                defaults: new { controller = "EducationalInstitute", action = "FetchCourses" }
+                );
+
+            routes.MapRoute(
+                name: "Default",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+            );
 
 
         }

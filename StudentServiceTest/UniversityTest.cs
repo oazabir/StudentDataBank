@@ -19,8 +19,8 @@ namespace StudentServiceTest
         {
             var url = Config.Default.BaseUrl + Config.Default.Universities;
             XDocument universities = XDocument.Load(url);
-            Assert.IsNotNull(universities.Element(ns + "Universities"), "<Universities> root node not found");
-            Assert.IsNotNull(universities.Element(ns + "Universities").Element(ns + "University"), "<Universities> does not contain any <University>");
+            Assert.IsNotNull(universities.Element(ns + "EducationalInstitutes"), "<Universities> root node not found");
+            Assert.IsNotNull(universities.Element(ns + "EducationalInstitutes").Element(ns + "University"), "<Universities> does not contain any <University>");
         }
 
         [TestMethod]

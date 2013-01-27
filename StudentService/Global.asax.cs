@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -22,7 +23,12 @@ namespace StudentService
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            
+
+        }
+
+        protected void Application_BeginRequest(object sender, EventArgs e)
+        {
+            Debug.WriteLine(Request.RawUrl);
         }
     }
 }

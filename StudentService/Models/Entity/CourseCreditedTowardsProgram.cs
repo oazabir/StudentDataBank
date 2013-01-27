@@ -14,7 +14,7 @@ namespace StudentService.Models.Entity
         Rejected = 2
     }
 
-    [DataContract(Namespace = "http://universalaward.org")]
+    [DataContract(Namespace = "http://studentdatabank.org")]
     public class CourseCreditedTowardsProgram
     {
         [Key]
@@ -27,7 +27,7 @@ namespace StudentService.Models.Entity
         public string CreditedCourseCode { get; set; }
 
         [DataMember][Required][StringLength(50)]
-        public string CreditedCourseUniversityCode { get; set; }
+        public string CreditedCourseEICode { get; set; }
 
         [DataMember(IsRequired=true)][Required]
         public float Score { get; set; }
@@ -38,7 +38,7 @@ namespace StudentService.Models.Entity
         [DataMember(IsRequired=true)][Required]
         public CourseCreditedStatusEnum Status { get; set; }
 
-        public StudentProgramEnrollment StudentProgram { get; set; }
+        public EIStudentEnrolledProgram StudentProgram { get; set; }
 
     }
 }

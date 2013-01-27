@@ -18,23 +18,23 @@ namespace StudentService.Models
         {
         }
 
-        public DbSet<UniversityProgram> Programs { get; set; }
+        public DbSet<EIProgram> Programs { get; set; }
 
-        public DbSet<University> Universities { get; set; }
+        public DbSet<EducationalInstitute> EducationalInstitutes { get; set; }
 
-        public DbSet<UniversityProgramCourse> ProgramCourses { get; set; }
+        public DbSet<EIProgramRequiredCourse> ProgramCourses { get; set; }
 
         public DbSet<UniversalCourse> UniversalCourses { get; set; }
 
-        public DbSet<UniversityStudent> Students { get; set; }
+        public DbSet<EIStudent> Students { get; set; }
 
-        public DbSet<StudentProgramEnrollment> StudentPrograms { get; set; }
+        public DbSet<EIStudentEnrolledProgram> StudentPrograms { get; set; }
 
-        public DbSet<StudentLinkToOtherUniversity> StudentLinks { get; set; }
+        public DbSet<StudentLinkToOtherEI> StudentLinks { get; set; }
 
-        public DbSet<StudentCourseTaken> StudentCourses { get; set; }
+        public DbSet<EIStudentCourseTaken> StudentCourses { get; set; }
 
-        public DbSet<UniversityCourse> UniversityCourses { get; set; }
+        public DbSet<EICourse> EducationalInstituteCourses { get; set; }
 
         public DbSet<CourseCreditedTowardsProgram> CourseCrediteds { get; set; }
 

@@ -23,7 +23,7 @@ namespace StudentService.Controllers.Api
         public CoursesCredited GetCourseCrediteds(string universityCode, string studentId, string programCode)
         {
             return new CoursesCredited(db.CourseCrediteds.Where(
-                cc => cc.StudentProgram.Student.University.Code == universityCode &&
+                cc => cc.StudentProgram.Student.EducationalInstitute.Code == universityCode &&
                     cc.StudentProgram.Student.StudentId == studentId &&
                     cc.StudentProgram.ProgramCode == programCode).AsEnumerable());
         }
@@ -32,7 +32,7 @@ namespace StudentService.Controllers.Api
         public CourseCreditedTowardsProgram GetCourseCredited(string universityCode, string studentId, string programCode, string courseCode)
         {
             CourseCreditedTowardsProgram coursecredited = db.CourseCrediteds.FirstOrDefault(
-                cc => cc.StudentProgram.Student.University.Code == universityCode &&
+                cc => cc.StudentProgram.Student.EducationalInstitute.Code == universityCode &&
                     cc.StudentProgram.Student.StudentId == studentId &&
                     cc.StudentProgram.ProgramCode == programCode &&
                     cc.RequiredCourseCode == courseCode);
@@ -79,7 +79,7 @@ namespace StudentService.Controllers.Api
         {
             if (ModelState.IsValid)
             {
-                var studentProgram = db.StudentPrograms.First(sp => sp.Student.University.Code == universityCode &&
+                var studentProgram = db.StudentPrograms.First(sp => sp.Student.EducationalInstitute.Code == universityCode &&
                     sp.Student.StudentId == studentId &&
                     sp.ProgramCode == programCode);
                 coursecredited.StudentProgram = studentProgram;
@@ -126,7 +126,7 @@ namespace StudentService.Controllers.Api
         }
     }
 
-    [CollectionDataContract(Namespace = "http://universalaward.org")]
+    [CollectionDataContract(Namespace = "http://studentdatabank.org")]
     public class CoursesCredited : Collection<CourseCreditedTowardsProgram>
     {
         private IEnumerable<CourseCreditedTowardsProgram> enu;

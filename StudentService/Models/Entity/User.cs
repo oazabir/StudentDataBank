@@ -13,7 +13,7 @@ namespace StudentService.Models.Entity
         University,
         Student
     }
-    [DataContract(Namespace = "http://universalaward.org")]
+    [DataContract(Namespace = "http://studentdatabank.org")]
     public class User
     {
         [Key]

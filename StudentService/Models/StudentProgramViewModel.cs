@@ -8,10 +8,12 @@ namespace StudentService.Models
 {
     public class StudentProgramViewModel
     {
-        public UniversityStudent Student { get; set; }
-        public UniversityProgram Program { get; set; }
-        public IQueryable<UniversityProgramCourse> ProgramCourses { get; set; }
-        public IQueryable<CourseCreditedTowardsProgram> CourseCredited { get; set; }
-        public List<University> Universities { get; set; }
+        public EIStudent Student { get; set; }
+        public EIProgram Program { get; set; }
+        public EIStudentEnrolledProgram EnrolledProgram { get; set; }
+        public List<EIProgramRequiredCourse> ProgramCourses { get; set; }
+        public List<CourseCreditedTowardsProgram> CourseCredited { get; set; }
+        public List<EducationalInstitute> EducationalInstitutes { get; set; }
+        public List<EICourse> CoursesInEI { get; set; }
     }
 }

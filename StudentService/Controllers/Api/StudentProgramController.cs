@@ -24,13 +24,13 @@ namespace StudentService.Controllers.Api
         // GET api/universities/{universityCode}/students/{studentId}/programs
         public StudentPrograms GetStudentPrograms(string universityCode, string studentId)
         {
-            return new StudentPrograms(db.StudentPrograms.Where(sp => sp.Student.University.Code == universityCode && sp.Student.StudentId == studentId).AsEnumerable());
+            return new StudentPrograms(db.StudentPrograms.Where(sp => sp.Student.EducationalInstitute.Code == universityCode && sp.Student.StudentId == studentId).AsEnumerable());
         }
 
         // GET api/universities/{universityCode}/students/{studentId}/programs/{programCode}
-        public StudentProgramEnrollment GetStudentProgram(string universityCode, string studentId, string programCode)
+        public EIStudentEnrolledProgram GetStudentProgram(string universityCode, string studentId, string programCode)
         {
-            StudentProgramEnrollment studentProgram = db.StudentPrograms.FirstOrDefault(sp => sp.Student.University.Code == universityCode && sp.Student.StudentId == studentId && sp.ProgramCode == programCode);
+            EIStudentEnrolledProgram studentProgram = db.StudentPrograms.FirstOrDefault(sp => sp.Student.EducationalInstitute.Code == universityCode && sp.Student.StudentId == studentId && sp.ProgramCode == programCode);
             if (studentProgram == null)
             {
                 throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
@@ -40,11 +40,11 @@ namespace StudentService.Controllers.Api
         }
 
         // PUT api/universities/{universityCode}/students/{studentId}/programs/{programCode}
-        public HttpResponseMessage PutStudentProgram(string universityCode, string studentId, string programCode, StudentProgramEnrollment studentProgram)
+        public HttpResponseMessage PutStudentProgram(string universityCode, string studentId, string programCode, EIStudentEnrolledProgram studentProgram)
         {
             if (ModelState.IsValid && programCode == studentProgram.ProgramCode)
             {
-                StudentProgramEnrollment existingStudentProgram = GetStudentProgram(universityCode, studentId, programCode);
+                EIStudentEnrolledProgram existingStudentProgram = GetStudentProgram(universityCode, studentId, programCode);
                 existingStudentProgram.EndDate = studentProgram.EndDate;
                 existingStudentProgram.StartDate = studentProgram.StartDate;
                 existingStudentProgram.Status = studentProgram.Status;
@@ -69,16 +69,16 @@ namespace StudentService.Controllers.Api
         }
 
         // POST api/universities/{universityCode}/students/
-        public HttpResponseMessage PostStudentProgram(string universityCode, string studentId, StudentProgramEnrollment studentProgram)
+        public HttpResponseMessage PostStudentProgram(string universityCode, string studentId, EIStudentEnrolledProgram studentProgram)
         {
             if (ModelState.IsValid)
             {
-                studentProgram.Student = db.Students.First(s => s.University.Code == universityCode && s.StudentId == studentId);
+                studentProgram.Student = db.Students.First(s => s.EducationalInstitute.Code == universityCode && s.StudentId == studentId);
                 db.StudentPrograms.Add(studentProgram);
                 db.SaveChanges();
 
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, studentProgram);
-                response.Headers.Location = new Uri(Url.Link("ProgramsOfStudentOfUniversity", new { universityCode = universityCode, studentId = studentProgram.Id, programCode = studentProgram.ProgramCode }));
+                response.Headers.Location = new Uri(Url.Link("ProgramsOfStudentOfEducationalInstitute", new { universityCode = universityCode, studentId = studentProgram.Id, programCode = studentProgram.ProgramCode }));
                 return response;
             }
             else
@@ -90,7 +90,7 @@ namespace StudentService.Controllers.Api
         // DELETE api/universities/{universityCode}/students/{studentId}/programs/{programCode}
         public HttpResponseMessage DeleteStudentProgram(string universityCode, string studentId, string programCode)
         {
-            StudentProgramEnrollment studentProgram = GetStudentProgram(universityCode, studentId, programCode);
+            EIStudentEnrolledProgram studentProgram = GetStudentProgram(universityCode, studentId, programCode);
             if (studentProgram == null)
             {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
@@ -113,7 +113,6 @@ namespace StudentService.Controllers.Api
         [HttpPost]
         public HttpResponseMessage Refresh(string universityCode, string studentId, string programCode)
         {
-            var student = db.Students.Where(s => s.StudentId == studentId && s.University.Code == universityCode).Include("LinksToOtherUniversity").Include("CoursesTaken").First();
             var studentProgram = GetStudentProgram(universityCode, studentId, programCode);
             studentProgram.Status = ProgramStatusEnum.BeingProcessed;
             db.SaveChanges();
@@ -121,7 +120,7 @@ namespace StudentService.Controllers.Api
             RefreshStudentProgramCourses(universityCode, studentId, programCode);
 
             var response = Request.CreateResponse(HttpStatusCode.Accepted);
-            response.Headers.Location = new Uri(Url.Link("ProgramsOfStudentOfUniversity", new { universityCode = universityCode, studentId = studentId, programCode = programCode }));
+            response.Headers.Location = new Uri(Url.Link("ProgramsOfStudentOfEducationalInstitute", new { universityCode = universityCode, studentId = studentId, programCode = programCode }));
             return response;
         }
 
@@ -132,19 +131,20 @@ namespace StudentService.Controllers.Api
                 try
                 {
                     var newDb = new StudentServiceContext();
-                    var student = newDb.Students.Where(s => s.StudentId == studentId && s.University.Code == universityCode).Include("LinksToOtherUniversity").Include("CoursesTaken").First();
-                    var studentProgram = newDb.StudentPrograms.FirstOrDefault(sp => sp.Student.University.Code == universityCode && sp.Student.StudentId == studentId && sp.ProgramCode == programCode);
+                    var student = newDb.Students.Where(s => s.StudentId == studentId && s.EducationalInstitute.Code == universityCode).First();
+                    var linksToOtherEI = newDb.StudentLinks.Where(s => s.Student.StudentId == studentId && s.Student.EducationalInstitute.Code == universityCode && (s.Status == LinkApprovalStatusEnum.Accepted || s.Status == LinkApprovalStatusEnum.RecordsReceived));
+                    var studentProgram = newDb.StudentPrograms.FirstOrDefault(sp => sp.Student.EducationalInstitute.Code == universityCode && sp.Student.StudentId == studentId && sp.ProgramCode == programCode);
 
                     // Get all the courses of the program in order to check which of them
                     // are done within the university and which are done in another university
-                    var coursesInProgram = newDb.ProgramCourses.Where(pc => pc.Program.Code == programCode && pc.Program.University.Code == universityCode).ToList();
-                    var coursesTaken = newDb.StudentCourses.Where(sc => sc.Student.StudentId == studentId && sc.Student.University.Code == universityCode).ToList();
-                    var coursesOfAwardingUniversity = newDb.UniversityCourses.Where(uc => uc.University.Code == universityCode).ToList();
+                    var coursesInProgram = newDb.ProgramCourses.Where(pc => pc.Program.Code == programCode && pc.Program.EducationalInstitute.Code == universityCode).ToList();
+                    var coursesTaken = newDb.StudentCourses.Where(sc => sc.Student.StudentId == studentId && sc.Student.EducationalInstitute.Code == universityCode).ToList();
+                    var coursesOfAwardingUniversity = newDb.EducationalInstituteCourses.Where(uc => uc.EducationalInstitute.Code == universityCode).ToList();
 
                     // Get the courses already credited
                     var coursesCredited = newDb.CourseCrediteds.Where(cc => cc.StudentProgram.ProgramCode == programCode
                         && cc.StudentProgram.Student.StudentId == studentId
-                        && cc.StudentProgram.Student.University.Code == universityCode)
+                        && cc.StudentProgram.Student.EducationalInstitute.Code == universityCode)
                         .ToList();
                     foreach (var courseInProgram in coursesInProgram)
                     {
@@ -160,7 +160,7 @@ namespace StudentService.Controllers.Api
                                 courseCredited.Score = courseTaken.Score;
                                 courseCredited.Status = CourseCreditedStatusEnum.Accepted;
                                 courseCredited.CreditedCourseCode = courseTaken.CourseCode;
-                                courseCredited.CreditedCourseUniversityCode = universityCode;
+                                courseCredited.CreditedCourseEICode = universityCode;
                             }
                             else
                             {
@@ -168,7 +168,7 @@ namespace StudentService.Controllers.Api
                                 var newCourseCredited = new CourseCreditedTowardsProgram
                                 {
                                     CreditedCourseCode = courseInProgram.Code,
-                                    CreditedCourseUniversityCode = universityCode,
+                                    CreditedCourseEICode = universityCode,
                                     Grade = courseTaken.Grade,
                                     Score = courseTaken.Score,
                                     Status = CourseCreditedStatusEnum.Accepted,
@@ -184,14 +184,14 @@ namespace StudentService.Controllers.Api
                             // See if this course is done in any other linked university.
                             var univeralCourseCode = coursesOfAwardingUniversity.Find(uc => uc.Code == courseInProgram.Code).UniversalCourseCode;
 
-                            foreach (var studentLink in student.LinksToOtherUniversity)
+                            foreach (var studentLink in linksToOtherEI)
                             {
-                                var otherUniversity = newDb.Universities.First(u => u.Code == studentLink.UniversityCode);
+                                var otherUniversity = newDb.EducationalInstitutes.First(u => u.Code == studentLink.EICode);
                                 var coursesTakenInOtherUniversity = newDb.StudentCourses.Where(
                                     sc => sc.Student.StudentId == studentLink.StudentId
-                                        && sc.Student.University.Code == studentLink.UniversityCode)
+                                        && sc.Student.EducationalInstitute.Code == studentLink.EICode)
                                         .ToList();
-                                var coursesOfOtherUniversity = newDb.UniversityCourses.Where(uc => uc.University.Code == studentLink.UniversityCode);
+                                var coursesOfOtherUniversity = newDb.EducationalInstituteCourses.Where(uc => uc.EducationalInstitute.Code == studentLink.EICode);
 
                                 // If student has done a course which has the same 
                                 // universal course code as the one we are looking for
@@ -210,7 +210,7 @@ namespace StudentService.Controllers.Api
                                         courseCredited.Score = matchedCourseTakenInOtherUniversity.Score;
                                         courseCredited.Status = CourseCreditedStatusEnum.Accepted;
                                         courseCredited.CreditedCourseCode = matchedCourseTakenInOtherUniversity.CourseCode;
-                                        courseCredited.CreditedCourseUniversityCode = otherUniversity.Code;
+                                        courseCredited.CreditedCourseEICode = otherUniversity.Code;
                                     }
                                     else
                                     {
@@ -218,7 +218,7 @@ namespace StudentService.Controllers.Api
                                         var newCourseCredited = new CourseCreditedTowardsProgram
                                         {
                                             CreditedCourseCode = matchedCourseTakenInOtherUniversity.CourseCode,
-                                            CreditedCourseUniversityCode = otherUniversity.Code,
+                                            CreditedCourseEICode = otherUniversity.Code,
                                             Grade = matchedCourseTakenInOtherUniversity.Grade,
                                             Score = matchedCourseTakenInOtherUniversity.Score,
                                             Status = CourseCreditedStatusEnum.Accepted,
@@ -233,10 +233,13 @@ namespace StudentService.Controllers.Api
                         }
                     }
 
+                    // Check if student has completed all the required
+                    // courses of this program. If student has done them all,
+                    // then accept the Program as completed.
                     var refreshedCoursesCredited = newDb.CourseCrediteds.Where(
                         cc => cc.StudentProgram.ProgramCode == programCode
                             && cc.StudentProgram.Student.StudentId == studentId
-                            && cc.StudentProgram.Student.University.Code == universityCode
+                            && cc.StudentProgram.Student.EducationalInstitute.Code == universityCode
                             && cc.Status == CourseCreditedStatusEnum.Accepted)
                             .ToList();
 
@@ -246,7 +249,7 @@ namespace StudentService.Controllers.Api
                     }
                     else
                     {
-                        studentProgram.Status = ProgramStatusEnum.Completed;
+                        studentProgram.Status = ProgramStatusEnum.InProgress;
                     }
                     studentProgram.LastRefreshedAt = DateTime.Now;
                     newDb.SaveChanges();
@@ -265,18 +268,18 @@ namespace StudentService.Controllers.Api
         }
     }
 
-    [CollectionDataContract(Namespace = "http://universalaward.org")]
-    public class StudentPrograms : Collection<StudentProgramEnrollment>
+    [CollectionDataContract(Namespace = "http://studentdatabank.org")]
+    public class StudentPrograms : Collection<EIStudentEnrolledProgram>
     {
-        private IEnumerable<StudentProgramEnrollment> enu;
-        public StudentPrograms(IEnumerable<StudentProgramEnrollment> e)
+        private IEnumerable<EIStudentEnrolledProgram> enu;
+        public StudentPrograms(IEnumerable<EIStudentEnrolledProgram> e)
         {
             this.enu = e;
         }
 
         public StudentPrograms() { }
 
-        public new IEnumerator<StudentProgramEnrollment> GetEnumerator()
+        public new IEnumerator<EIStudentEnrolledProgram> GetEnumerator()
         {
             return (this.enu ?? this).GetEnumerator();
         }
