@@ -87,6 +87,7 @@ namespace StudentService
             xmlFormatter.Indent = true;
             config.Formatters.Remove(xmlFormatter);
             config.Formatters.Insert(0, xmlFormatter);            
+            
         }
     }
 }
